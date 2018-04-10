@@ -8,9 +8,11 @@ import Chatbox from './components/Chatbox';
 
 import { darkBlue } from './utils/palette';
 
-const url = 'http://howardchicken.herokuapp.com/howard'; // N.B. not original, with hyphen
-// const url = 'http://localhost:3001/howard';
-// const url = 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
+const url =
+  process.env.NODE_ENV === 'production'
+    ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
+    : 'http://localhost:3001/howard';
+// currently failing experiment @ 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
 
 const AppWrap = styled.div`
   margin: 0;
