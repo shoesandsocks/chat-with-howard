@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import { darkBlue } from '../../utils/palette';
 
 const ControlsForm = styled.form`
-  padding-top: 3em;
   width: 100%;
-  height: 150px;
+  max-width: 1000px;
+  height: 200px;
   text-align: center;
 `;
-
+// same style but div not form
 const BtnWrap = styled.div`
-  padding-top: 3em;
   width: 100%;
-  height: 150px;
+  max-width: 1000px;
+  height: 200px;
   text-align: center;
 `;
 
@@ -106,7 +106,6 @@ const Value = styled.p`
 const VoiceSelect = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
   width: 200px;
   margin: 50px;
   width: 150px;
@@ -119,24 +118,7 @@ const VoiceSelect = styled.select`
   height: 34px;
 `;
 
-const Checkbox = styled.input`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  height: 2em;
-  width: 2em;
-  margin-left: 3em;
-  background: white;
-  border: 3px solid orange;
-  border-radius: 50%;
-  &:checked {
-    background: orange;
-  }
-`;
-
 class SpeechControls extends React.Component {
-  // componentWillUpdate() {
-  //   console.log(this.props.markov);
-  // }
   renderOptions() {
     return this.props.voices.map(v => (
       <option name={v.name} value={v.idx} key={v.idx}>
@@ -146,15 +128,7 @@ class SpeechControls extends React.Component {
   }
   render() {
     const {
-      rate,
-      change,
-      voice,
-      voices,
-      pitch,
-      approvedToSpeak,
-      approve,
-      markov,
-      handleCheckbox,
+      rate, change, voice, voices, pitch, approvedToSpeak, approve,
     } = this.props;
     if (!approvedToSpeak) {
       return (
@@ -165,6 +139,7 @@ class SpeechControls extends React.Component {
     }
     return (
       <ControlsForm>
+        {approvedToSpeak && <AllowBtn onClick={approve}>cancel speech</AllowBtn>}
         <ControlLabel htmlFor="rate">
           <Value>Rate</Value>
           <Slider
@@ -196,22 +171,12 @@ class SpeechControls extends React.Component {
         </ControlLabel>
 
         <ControlRow>
+          {/* this row-wrap currently unnec */}
           <ControlLabel style={{ justifyContent: 'flex-start' }} htmlFor="voice">
             <Value>Voice</Value>
             <VoiceSelect name="voice" id="voice" value={voice} onChange={change}>
               {voices && this.renderOptions()}
             </VoiceSelect>
-          </ControlLabel>
-
-          <ControlLabel>
-            <Value>Markov?</Value>
-            <Checkbox
-              type="checkbox"
-              checked={markov}
-              id="markov"
-              name="markov"
-              onClick={handleCheckbox}
-            />
           </ControlLabel>
         </ControlRow>
       </ControlsForm>
@@ -222,7 +187,6 @@ class SpeechControls extends React.Component {
 SpeechControls.propTypes = {
   rate: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
-  handleCheckbox: PropTypes.func.isRequired,
   approve: PropTypes.func.isRequired,
   voice: PropTypes.string.isRequired,
   voices: PropTypes.arrayOf(PropTypes.shape({
@@ -232,7 +196,6 @@ SpeechControls.propTypes = {
   })).isRequired,
   pitch: PropTypes.string.isRequired,
   approvedToSpeak: PropTypes.bool.isRequired,
-  markov: PropTypes.bool.isRequired,
 };
 
 export default SpeechControls;

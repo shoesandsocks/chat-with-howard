@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Titlebar from './components/Titlebar';
 import SpeechControls from './components/SpeechControls';
+import OtherControls from './components/OtherControls';
 import Chatbox from './components/Chatbox';
 
 import { darkBlue } from './utils/palette';
@@ -36,6 +37,7 @@ class App extends Component {
     newtext: '',
     conversation: [],
     markov: false,
+    skipit: false,
   };
 
   componentDidMount() {
@@ -63,6 +65,9 @@ class App extends Component {
   handleCheckbox = () => {
     this.setState({ markov: !this.state.markov });
   };
+  handleSkipCheckbox = () => {
+    this.setState({ skipit: !this.state.skipit });
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     const { newtext } = this.state;
@@ -73,6 +78,9 @@ class App extends Component {
         { text: newtext, time: new Date().toString().split(' ')[4], user: true },
       ]),
     });
+    if (this.state.skipit) {
+      return this.speak(newtext);
+    }
     const reply = await this.queryHoward(newtext);
     let text;
     try {
@@ -98,10 +106,11 @@ class App extends Component {
   };
 
   approve = () => {
+    if (this.state.approvedToSpeak) return this.setState({ approvedToSpeak: false, skipit: false });
     this.speak('oh kay');
     this.setState({ approvedToSpeak: true });
     this.getVoices(); // I think this is needed for Chrome to be able to populate list?
-    this.speak('hello');
+    return this.speak('hello');
   };
 
   speak(text) {
@@ -142,6 +151,7 @@ class App extends Component {
       conversation,
       newtext,
       markov,
+      skipit,
     } = this.state;
     return (
       <AppWrap>
@@ -154,7 +164,13 @@ class App extends Component {
           rate={rate}
           change={this.handleChange}
           approve={this.approve}
+        />
+        <OtherControls
+          approve={this.approve}
+          approvedToSpeak={approvedToSpeak}
+          skipit={skipit}
           markov={markov}
+          handleSkipCheckbox={this.handleSkipCheckbox}
           handleCheckbox={this.handleCheckbox}
         />
         <Chatbox
