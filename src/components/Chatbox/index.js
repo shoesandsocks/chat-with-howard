@@ -80,12 +80,12 @@ const renderConvo = (convo) => {
 };
 
 const Chatbox = ({
-  handleSubmit, handleChange, newtext, convo,
+  handleSubmit, handleChange, newtext, convo, keywatch,
 }) => (
   <Box onSubmit={handleSubmit}>
     <label style={{ color: 'white' }} htmlFor="newtext">
       &gt;
-      <NewText type="text" name="newtext" id="newtext" value={newtext} onChange={handleChange} />
+      <NewText onKeyUp={keywatch} type="text" name="newtext" id="newtext" value={newtext} onChange={handleChange} />
     </label>
     {renderConvo(convo)}
   </Box>
@@ -96,6 +96,7 @@ Chatbox.propTypes = {
   newtext: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  keywatch: PropTypes.func.isRequired,
 };
 
 export default Chatbox;

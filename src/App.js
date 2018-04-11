@@ -42,8 +42,10 @@ class App extends Component {
     rate: '1',
     newtext: '',
     conversation: [],
+    history: [],
     markov: false,
     skipit: false,
+    historyIndex: -1,
   };
 
   componentDidMount() {
@@ -76,10 +78,16 @@ class App extends Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { newtext } = this.state;
+    const { newtext, history } = this.state;
     if (!newtext || newtext === '') return null;
+
+    const newHistory = history.slice(0); // new clone, to mutate...
+    newHistory.unshift(newtext);
+
     this.setState({
       newtext: '',
+      history: newHistory,
+      historyIndex: -1,
       conversation: this.state.conversation.concat([
         { text: newtext, time: new Date().toString().split(' ')[4], user: true },
       ]),
@@ -158,6 +166,17 @@ class App extends Component {
       .catch(e => console.log(e)); // eslint-disable-line
   };
 
+  keywatch = (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      const { history, historyIndex } = this.state;
+      const move = e.key === 'ArrowUp' ? 1 : -1;
+      const newIndexItem = historyIndex + move;
+      if (newIndexItem < 0 || newIndexItem > history.length - 1) return null;
+      return this.setState({ newtext: history[newIndexItem], historyIndex: newIndexItem });
+    }
+    return null;
+  };
+
   render() {
     const {
       approvedToSpeak,
@@ -195,6 +214,7 @@ class App extends Component {
           newtext={newtext}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          keywatch={this.keywatch}
         />
       </AppWrap>
     );
