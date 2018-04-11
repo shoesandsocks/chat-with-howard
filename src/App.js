@@ -9,17 +9,19 @@ import Chatbox from './components/Chatbox';
 
 import { darkBlue } from './utils/palette';
 
-const url = 'https://howardchicken.herokuapp.com/howard';
-// const url =
-//   process.env.NODE_ENV === 'production'
-//     ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
-//     : 'http://localhost:3001/howard';
+// const url = 'https://howardchicken.herokuapp.com/howard';
+const url =
+  process.env.NODE_ENV === 'production'
+    ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
+    : 'http://localhost:3001/howard';
 // currently failing experiment @ 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
+
+console.log(`url is: ${url}`);
 
 const AppWrap = styled.div`
   margin: 0;
-  padding: 3em;
-  height: 100%;
+  padding: 3em 3em 0 3em;
+  height: 96vh;
   background: ${darkBlue};
   display: flex;
   flex-flow: column nowrap;
