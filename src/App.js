@@ -10,6 +10,8 @@ import Chatbox from './components/Chatbox';
 import { darkBlue } from './utils/palette';
 
 // const url = 'https://howardchicken.herokuapp.com/howard';
+console.log(process.env);
+
 const url =
   process.env.NODE_ENV === 'production'
     ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
