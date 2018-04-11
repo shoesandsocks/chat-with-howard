@@ -10,6 +10,10 @@ const OtherControlsForm = styled.form`
   max-width: 1000px;
   height: 20px;
   text-align: center;
+  transition: all 0.3s;
+  @media (max-width: 600px) {
+    margin: 3em;
+  }
 `;
 
 const ControlRow = styled.div`
@@ -17,6 +21,11 @@ const ControlRow = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 600px) {
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
 `;
 
 const ControlLabel = styled.label`

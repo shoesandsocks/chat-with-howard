@@ -9,6 +9,10 @@ const ControlsForm = styled.form`
   max-width: 1000px;
   height: 200px;
   text-align: center;
+  transition: all 0.3s;
+  @media (max-width: 600px) {
+    height: 100px;
+  }
 `;
 // same style but div not form
 const BtnWrap = styled.div`
@@ -16,6 +20,10 @@ const BtnWrap = styled.div`
   max-width: 1000px;
   height: 200px;
   text-align: center;
+  transition: all 0.3s;
+  @media (max-width: 600px) {
+    height: 100px;
+  }
 `;
 
 const AllowBtn = styled.button`

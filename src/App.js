@@ -25,6 +25,10 @@ const AppWrap = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  transition: all 0.3s;
+  @media (max-width: 600px) {
+    padding: 1em;
+  }
 `;
 
 class App extends Component {
