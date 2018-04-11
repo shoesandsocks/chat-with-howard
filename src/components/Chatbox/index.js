@@ -36,6 +36,9 @@ const Chat = styled.div`
   max-width: 60%;
   border-radius: 7px;
   background-color: ${props => props.bg};
+  @media (max-width: 600px) {
+    max-width: 70%;
+  }
 `;
 
 const Text = styled.p`
@@ -58,6 +61,9 @@ const NewText = styled.input`
   cursor: pointer;
   outline: none;
   padding-left: 4px;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const renderConvo = (convo) => {
