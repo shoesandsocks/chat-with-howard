@@ -46,6 +46,13 @@ const ControlLabel = styled.label`
   font-size: 0.8em;
 `;
 
+const ControlRow = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 const Slider = styled.input`
   width: 80%;
   outline: none;
@@ -112,11 +119,24 @@ const VoiceSelect = styled.select`
   height: 34px;
 `;
 
-class SpeechControls extends React.Component {
-  constructor(props) {
-    super(props);
-    this.renderOptions = this.renderOptions.bind(this);
+const Checkbox = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 2em;
+  width: 2em;
+  margin-left: 3em;
+  background: white;
+  border: 3px solid orange;
+  border-radius: 50%;
+  &:checked {
+    background: orange;
   }
+`;
+
+class SpeechControls extends React.Component {
+  // componentWillUpdate() {
+  //   console.log(this.props.markov);
+  // }
   renderOptions() {
     return this.props.voices.map(v => (
       <option name={v.name} value={v.idx} key={v.idx}>
@@ -126,7 +146,15 @@ class SpeechControls extends React.Component {
   }
   render() {
     const {
-      rate, change, voice, voices, pitch, approvedToSpeak, approve,
+      rate,
+      change,
+      voice,
+      voices,
+      pitch,
+      approvedToSpeak,
+      approve,
+      markov,
+      handleCheckbox,
     } = this.props;
     if (!approvedToSpeak) {
       return (
@@ -167,12 +195,25 @@ class SpeechControls extends React.Component {
           <Value>{pitch}</Value>
         </ControlLabel>
 
-        <ControlLabel style={{ justifyContent: 'flex-start' }} htmlFor="voice">
-          <Value>Voice</Value>
-          <VoiceSelect name="voice" id="voice" value={voice} onChange={change}>
-            {voices && this.renderOptions()}
-          </VoiceSelect>
-        </ControlLabel>
+        <ControlRow>
+          <ControlLabel style={{ justifyContent: 'flex-start' }} htmlFor="voice">
+            <Value>Voice</Value>
+            <VoiceSelect name="voice" id="voice" value={voice} onChange={change}>
+              {voices && this.renderOptions()}
+            </VoiceSelect>
+          </ControlLabel>
+
+          <ControlLabel>
+            <Value>Markov?</Value>
+            <Checkbox
+              type="checkbox"
+              checked={markov}
+              id="markov"
+              name="markov"
+              onClick={handleCheckbox}
+            />
+          </ControlLabel>
+        </ControlRow>
       </ControlsForm>
     );
   }
@@ -181,6 +222,7 @@ class SpeechControls extends React.Component {
 SpeechControls.propTypes = {
   rate: PropTypes.string.isRequired,
   change: PropTypes.func.isRequired,
+  handleCheckbox: PropTypes.func.isRequired,
   approve: PropTypes.func.isRequired,
   voice: PropTypes.string.isRequired,
   voices: PropTypes.arrayOf(PropTypes.shape({
@@ -190,6 +232,7 @@ SpeechControls.propTypes = {
   })).isRequired,
   pitch: PropTypes.string.isRequired,
   approvedToSpeak: PropTypes.bool.isRequired,
+  markov: PropTypes.bool.isRequired,
 };
 
 export default SpeechControls;

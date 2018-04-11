@@ -57,9 +57,11 @@ class App extends Component {
 
   handleChange = (e) => {
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
+    return this.setState({ [e.target.name]: e.target.value });
   };
-
+  handleCheckbox = () => {
+    this.setState({ markov: !this.state.markov });
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     const { newtext } = this.state;
@@ -131,7 +133,14 @@ class App extends Component {
 
   render() {
     const {
-      approvedToSpeak, voices, voice, pitch, rate, conversation, newtext,
+      approvedToSpeak,
+      voices,
+      voice,
+      pitch,
+      rate,
+      conversation,
+      newtext,
+      markov,
     } = this.state;
     return (
       <AppWrap>
@@ -144,6 +153,8 @@ class App extends Component {
           rate={rate}
           change={this.handleChange}
           approve={this.approve}
+          markov={markov}
+          handleCheckbox={this.handleCheckbox}
         />
         <Chatbox
           convo={conversation}
