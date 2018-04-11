@@ -94,7 +94,10 @@ class App extends Component {
         const rnd = Math.floor(Math.random() * reply.length);
         text = reply[rnd].text; // eslint-disable-line
       } else if (Array.isArray(reply) && reply.length === 0) {
-        text = 'Sorry.';
+        // text = 'Sorry.';
+        const singleton = await this.queryHoward(1, 3);
+        text = singleton[0].text; // eslint-disable-line
+        // line above is super-brittle. TODO: fix
       } else {
         text = reply.text; // eslint-disable-line
       }
@@ -133,15 +136,23 @@ class App extends Component {
     return speechSynthesis.speak(msg); // eslint-disable-line
   }
 
-  queryHoward = (argument) => {
-    const kind = this.state.markov ? 5 : 4;
+  /**
+   * `argument` and `kindd`:
+   * pass a number as arg and 1 as kindd, get that numbered ep
+   * pass anything as arg and 2 as kindd, get a random ep
+   * pass a number as arg and 3 as kindd, get that many random `text` quotes in an array
+   * pass some text as arg an 4 as kindd, get back any matching `text` quotes in arr (or empty arr)
+   * pass some text as arg an 5 as kindd, get 'markov'-type gibberish
+   */
+  queryHoward = (argument, kindd = null) => {
+    const kind = kindd || (this.state.markov ? 5 : 4);
     const params = new URLSearchParams(); // eslint-disable-line
     params.append('kind', kind);
     params.append('argument', argument);
     return axios
       .post(url, params)
       .then((response) => {
-        console.log(response); // eslint-disable-line
+        console.log(response.data.response); // eslint-disable-line
         return response.data.response;
       })
       .catch(e => console.log(e)); // eslint-disable-line
