@@ -24,18 +24,32 @@ const Text = styled.p`
 `;
 
 const Big = styled.h1`
+  color: orange;
+  font-family: 'Inconsolata', sans-serif;
+  margin: 1em 0 0 0;
+  font-size: 3em;
+`;
+
+const BigA = styled.a`
   color: white;
   font-family: 'Inconsolata', sans-serif;
   margin: 1em 0 0 0;
   font-size: 2em;
+  text-decoration-color: orange;
+  transition: all 0.25s;
+  &:hover {
+    color: orange;
+  }
 `;
 
 const Nope = () => (
   <NopeWrap>
-    <Text>That&amp;s not a thing.</Text>
-    <Text>inspired by, and </Text>
-    <Text>fed with data from</Text>
+    <Big>- -</Big>
+    <Text>That&apos;s not a thing.</Text>
     <Big>404</Big>
+    <Big>- -</Big>
+    <Text>Maybe you wanted</Text>
+    <BigA href="http://www.howardchicken.com">Howard Chicken</BigA>
   </NopeWrap>
 );
 
