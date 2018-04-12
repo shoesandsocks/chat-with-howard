@@ -1,28 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { darkBlue } from '../../utils/palette';
 
+const SlideOpen = keyframes`
+  0% {
+    height: 60px;
+    opacity: 0;
+    }
+  100% {
+    height: 200px;
+    opacity: 1;
+  }
+`;
+const SlideOpenSmall = keyframes`
+  0% {
+    height: 60px;
+    opacity: 0;
+    }
+  100% {
+    height: 100px;
+    opacity: 1;
+  }
+`;
 const ControlsForm = styled.form`
   width: 100%;
   max-width: 1000px;
   height: 200px;
   text-align: center;
   transition: all 0.3s;
+  animation: ${SlideOpen} 0.5s ease-in-out 0s;
   @media (max-width: 600px) {
     height: 100px;
+    animation: ${SlideOpenSmall} 0.5s ease-in-out 0s;
   }
 `;
 // same style but div not form
 const BtnWrap = styled.div`
   width: 100%;
   max-width: 1000px;
-  height: 200px;
+  height: 60px;
   text-align: center;
   transition: all 0.3s;
   @media (max-width: 600px) {
-    height: 100px;
+    height: 0px;
   }
 `;
 
@@ -126,71 +148,68 @@ const VoiceSelect = styled.select`
   height: 34px;
 `;
 
-class SpeechControls extends React.Component {
-  renderOptions() {
-    return this.props.voices.map(v => (
+const SpeechControls = ({
+  rate, change, voice, voices, pitch, approvedToSpeak, approve,
+}) => {
+  const renderOptions = vx =>
+    vx.map(v => (
       <option name={v.name} value={v.idx} key={v.idx}>
         {v.name} - {v.lang}
       </option>
     ));
-  }
-  render() {
-    const {
-      rate, change, voice, voices, pitch, approvedToSpeak, approve,
-    } = this.props;
-    if (!approvedToSpeak) {
-      return (
-        <BtnWrap>
-          <AllowBtn onClick={approve}>allow speech</AllowBtn>
-        </BtnWrap>
-      );
-    }
+
+  if (!approvedToSpeak) {
     return (
-      <ControlsForm>
-        {approvedToSpeak && <AllowBtn onClick={approve}>cancel speech</AllowBtn>}
-        <ControlLabel htmlFor="rate">
-          <Value>Rate</Value>
-          <Slider
-            onChange={change}
-            type="range"
-            min="0.5"
-            max="2"
-            value={rate}
-            step="0.1"
-            id="rate"
-            name="rate"
-          />
-          <Value>{rate}</Value>
-        </ControlLabel>
-
-        <ControlLabel htmlFor="pitch">
-          <Value>Pitch</Value>
-          <Slider
-            onChange={change}
-            type="range"
-            min="0"
-            max="2"
-            value={pitch}
-            step="0.1"
-            id="pitch"
-            name="pitch"
-          />
-          <Value>{pitch}</Value>
-        </ControlLabel>
-
-        <ControlRow>
-          {/* this row-wrap currently unnec */}
-          <ControlLabel style={{ justifyContent: 'flex-start' }} htmlFor="voice">
-            <Value>Voice</Value>
-            <VoiceSelect name="voice" id="voice" value={voice} onChange={change}>
-              {voices && this.renderOptions()}
-            </VoiceSelect>
-          </ControlLabel>
-        </ControlRow>
-      </ControlsForm>
+      <BtnWrap>
+        <AllowBtn onClick={approve}>allow speech</AllowBtn>
+      </BtnWrap>
     );
   }
-}
+  return (
+    <ControlsForm open={approvedToSpeak}>
+      {approvedToSpeak && <AllowBtn onClick={approve}>cancel speech</AllowBtn>}
+      <ControlLabel htmlFor="rate">
+        <Value>Rate</Value>
+        <Slider
+          onChange={change}
+          type="range"
+          min="0.5"
+          max="2"
+          value={rate}
+          step="0.1"
+          id="rate"
+          name="rate"
+        />
+        <Value>{rate}</Value>
+      </ControlLabel>
+
+      <ControlLabel htmlFor="pitch">
+        <Value>Pitch</Value>
+        <Slider
+          onChange={change}
+          type="range"
+          min="0"
+          max="2"
+          value={pitch}
+          step="0.1"
+          id="pitch"
+          name="pitch"
+        />
+        <Value>{pitch}</Value>
+      </ControlLabel>
+
+      <ControlRow>
+        {/* this row-wrap currently unnec */}
+        <ControlLabel style={{ justifyContent: 'flex-start' }} htmlFor="voice">
+          <Value>Voice</Value>
+          <VoiceSelect name="voice" id="voice" value={voice} onChange={change}>
+            {renderOptions(voices)}
+          </VoiceSelect>
+        </ControlLabel>
+      </ControlRow>
+    </ControlsForm>
+  );
+};
 
 SpeechControls.propTypes = {
   rate: PropTypes.string.isRequired,

@@ -12,7 +12,7 @@ const OtherControlsForm = styled.form`
   text-align: center;
   transition: all 0.3s;
   @media (max-width: 600px) {
-    margin: 3em;
+    margin-top: 5em;
   }
 `;
 
@@ -22,9 +22,9 @@ const ControlRow = styled.div`
   justify-content: space-between;
   align-items: center;
   @media (max-width: 600px) {
-    flex-flow: column wrap;
+    /* flex-flow: column wrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: flex-end; */
   }
 `;
 
@@ -71,7 +71,7 @@ const OtherControls = ({
 
       {approvedToSpeak && (
         <ControlLabel>
-          Forget Howard, just read what I type:
+          Forget Howard:
           <Checkbox
             type="checkbox"
             checked={skipit}
