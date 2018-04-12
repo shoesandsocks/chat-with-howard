@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ChatWithHoward from './containers/ChatWithHoward';
 import About from './containers/About';
+import Nope from './containers/Nope';
 
 import { darkBlue } from './utils/palette';
 
@@ -46,9 +47,12 @@ const App = () => (
           </LinksLI>
         </LinksUL>
       </Header>
-      <Route exact path="/" component={ChatWithHoward} />
-      <Route path="/chat" component={ChatWithHoward} />
-      <Route path="/about" component={About} />
+      <Switch>
+        <Route exact path="/" component={ChatWithHoward} />
+        <Route path="/chat" component={ChatWithHoward} />
+        <Route path="/about" component={About} />
+        <Route component={Nope} />
+      </Switch>
     </div>
   </Router>
 );
