@@ -23,7 +23,15 @@ const Box = styled.form`
   /* apparently there's no moz equivalent, so it just sucks a little on FF */
 `;
 
-const ChatWrap = styled.div`
+const ChatLineWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+
+const ChatBubbleAndTimetamp = styled.div`
+  width: 100%;
   min-height: 30px;
   margin-top: 0.125em;
   margin-bottom: 0.125em;
@@ -69,13 +77,16 @@ const NewText = styled.input`
 const renderConvo = (convo) => {
   const clone = convo.slice(0).reverse();
   return clone.map((c, i) => (
-    <ChatWrap key={i} align={c.user ? 'flex-start' : 'flex-end'}>
-      {c.user && <Timestamp time={c.time} />}
-      <Chat key={`${c}`} bg={c.user ? '#FFA500' : '#aaa'}>
-        <Text>{c.text}</Text>
-      </Chat>
-      {!c.user && <Timestamp time={c.time} />}
-    </ChatWrap>
+    <ChatLineWrapper>
+      <ChatBubbleAndTimetamp key={i} align={c.user ? 'flex-start' : 'flex-end'}>
+        {c.user && <Timestamp time={c.time} />}
+        <Chat key={`${c}`} bg={c.user ? '#FFA500' : '#aaa'}>
+          <Text>{c.text}</Text>
+        </Chat>
+        {!c.user && <Timestamp time={c.time} />}
+      </ChatBubbleAndTimetamp>
+      {!c.user && c.warning && <Timestamp time={c.warning} />}
+    </ChatLineWrapper>
   ));
 };
 
@@ -85,7 +96,14 @@ const Chatbox = ({
   <Box onSubmit={handleSubmit}>
     <label style={{ color: 'white' }} htmlFor="newtext">
       &gt;
-      <NewText onKeyUp={keywatch} type="text" name="newtext" id="newtext" value={newtext} onChange={handleChange} />
+      <NewText
+        onKeyUp={keywatch}
+        type="text"
+        name="newtext"
+        id="newtext"
+        value={newtext}
+        onChange={handleChange}
+      />
     </label>
     {renderConvo(convo)}
   </Box>

@@ -8,6 +8,7 @@ import OtherControls from '../../components/OtherControls';
 import Chatbox from '../../components/Chatbox';
 
 import { darkBlue } from '../../utils/palette';
+import getQ from '../../utils/localsearch';
 
 // const url = '/howard';
 
@@ -46,6 +47,7 @@ class ChatWithHoward extends Component {
     markov: false,
     skipit: false,
     historyIndex: -1,
+    warning: null,
   };
 
   componentDidMount() {
@@ -97,6 +99,7 @@ class ChatWithHoward extends Component {
     }
     const reply = await this.queryHoward(newtext);
     let text;
+    let warning = null;
     try {
       if (Array.isArray(reply) && reply.length > 0) {
         const rnd = Math.floor(Math.random() * reply.length);
@@ -110,14 +113,17 @@ class ChatWithHoward extends Component {
         text = reply.text; // eslint-disable-line
       }
     } catch (er) {
-      text = 'Sorry?';
+      console.log(er);
+      text = getQ();
+      warning = 'Howard might be offline. This is a random result.';
+      // text = 'Sorry?';
     }
     if (this.state.approvedToSpeak) {
       this.speak(text);
     }
     return this.setState({
       conversation: this.state.conversation.concat([
-        { text, time: new Date().toString().split(' ')[4] },
+        { text, warning, time: new Date().toString().split(' ')[4] },
       ]),
     });
   };
@@ -188,6 +194,7 @@ class ChatWithHoward extends Component {
       newtext,
       markov,
       skipit,
+      warning,
     } = this.state;
     return (
       <AppWrap>
@@ -215,6 +222,7 @@ class ChatWithHoward extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           keywatch={this.keywatch}
+          warning={warning}
         />
       </AppWrap>
     );
