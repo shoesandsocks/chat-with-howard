@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "cra-append-sw": "^2.3.0",
+    "idb-keyval": "github:shoesandsocks/idb-keyval",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -21,8 +23,8 @@
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start && cra-append-sw --mode dev ./src/custom-sw.js",
+    "build": "react-scripts build && cra-append-sw ./src/custom.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

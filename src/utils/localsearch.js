@@ -1,7 +1,11 @@
-import howard from '../data/howard.json';
+// import howard from '../data/howard.json';
+import { get } from 'idb-keyval';
 
-const rnd = array => Math.floor(Math.random() * array.length);
+const randomNumber = () => Math.floor(Math.random() * 4000);
 
-const getQ = () => howard[rnd(howard)].text;
+const getQ = () =>
+  get(randomNumber)
+    .then(val => val)
+    .catch(() => 'Howard is so dead rn');
 
 export default getQ;
