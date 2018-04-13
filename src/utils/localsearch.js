@@ -5,7 +5,10 @@ const randomNumber = () => Math.floor(Math.random() * 4000);
 
 const getQ = () =>
   get(randomNumber)
-    .then(val => val)
+    .then((val) => {
+      console.log(val);
+      return val;
+    })
     .catch(() => 'Howard is so dead rn');
 
 export default getQ;
