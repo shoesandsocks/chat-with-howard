@@ -98,7 +98,7 @@ class ChatWithHoward extends Component {
       return this.speak(newtext);
     }
     const reply = await this.queryHoward(newtext);
-    let text;
+    let text = null;
     let warning = null;
     try {
       if (Array.isArray(reply) && reply.length > 0) {
@@ -113,10 +113,8 @@ class ChatWithHoward extends Component {
         text = reply.text; // eslint-disable-line
       }
     } catch (er) {
-      console.log(er);
-      text = getQ();
+      text = await getQ().then(response => response);
       warning = 'Howard might be offline. This is a random result.';
-      // text = 'Sorry?';
     }
     if (this.state.approvedToSpeak) {
       this.speak(text);
@@ -127,7 +125,7 @@ class ChatWithHoward extends Component {
       ]),
     });
   };
-
+  // offlineSearch = () => getQ().then(response => response);
   approve = () => {
     if (this.state.approvedToSpeak) return this.setState({ approvedToSpeak: false, skipit: false });
     this.speak('oh kay');

@@ -1,10 +1,8 @@
 import { set } from 'idb-keyval';
 import howard from './data/howard.json';
 
-console.log('hellow from custom-sw');
-
 function createDB() {
-  howard.forEach((h, i) => set(i, h));
+  howard.forEach((h, i) => set(i.toString(), h));
 }
 
 self.addEventListener('activate', (event) => {
