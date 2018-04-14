@@ -11,13 +11,11 @@ import { darkBlue } from '../../utils/palette';
 import getQ from '../../utils/localsearch';
 
 // const url = '/howard';
-
 const url =
   process.env.NODE_ENV === 'production'
     ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
     : 'http://localhost:3001/howard';
 // currently failing experiment @ 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
-// console.log(`url is: ${url}`);
 
 const AppWrap = styled.div`
   margin: 0;
@@ -113,7 +111,10 @@ class ChatWithHoward extends Component {
         text = reply.text; // eslint-disable-line
       }
     } catch (er) {
-      text = await getQ().then(response => response);
+      text = await getQ().then((response) => {
+        console.log('hello', response);
+        return response;
+      });
       warning = 'Howard might be offline. This is a random result.';
     }
     if (this.state.approvedToSpeak) {
