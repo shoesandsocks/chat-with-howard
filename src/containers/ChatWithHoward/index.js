@@ -6,6 +6,7 @@ import Titlebar from '../../components/Titlebar';
 import SpeechControls from '../../components/SpeechControls';
 import OtherControls from '../../components/OtherControls';
 import Chatbox from '../../components/Chatbox';
+import Overlay from '../../components/Overlay';
 
 import { darkBlue } from '../../utils/palette';
 import getQ from '../../utils/localsearch';
@@ -46,6 +47,7 @@ class ChatWithHoward extends Component {
     skipit: false,
     historyIndex: -1,
     warning: null,
+    hasError: false,
   };
 
   componentDidMount() {
@@ -64,6 +66,12 @@ class ChatWithHoward extends Component {
       });
     });
     this.setState({ voices });
+  }
+
+  componentDidCatch(error, info) {
+    console.log(error);
+    console.log(info);
+    this.setState(state => ({ ...state, hasError: true }));
   }
 
   handleChange = (e) => {
@@ -189,7 +197,18 @@ class ChatWithHoward extends Component {
       markov,
       skipit,
       warning,
+      hasError,
     } = this.state;
+    if (hasError) {
+      return (
+        <Overlay onClose={() => this.setState({ hasError: false })}>
+          <p>
+            something went terribly wrong. This error was thrown by React&apos;s componentDidCatch
+            method (That&apos;s bad.)
+          </p>
+        </Overlay>
+      );
+    }
     return (
       <AppWrap>
         <Titlebar title="Chat with Howard" />
