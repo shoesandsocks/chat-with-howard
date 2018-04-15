@@ -3,6 +3,7 @@
   font-family: 'Inconsolata';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url('./fonts/inconsolata-v16-latin-regular.eot'); /* IE9 Compat Modes */
   src: local('Inconsolata Regular'), local('Inconsolata-Regular'),
     url('./fonts/inconsolata-v16-latin-regular.eot?#iefix')
@@ -20,6 +21,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
+  font-display: swap;
   src: url('./fonts/roboto-v18-latin-300.eot'); /* IE9 Compat Modes */
   src: local('Roboto Light'), local('Roboto-Light'),
     url('./fonts/roboto-v18-latin-300.eot?#iefix') format('embedded-opentype'),
