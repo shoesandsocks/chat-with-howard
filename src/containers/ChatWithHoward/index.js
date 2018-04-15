@@ -106,14 +106,11 @@ class ChatWithHoward extends Component {
         // text = 'Sorry.';
         const singleton = await this.queryHoward(1, 3);
         text = singleton[0].text; // eslint-disable-line
-        // line above is super-brittle. TODO: fix
       } else {
         text = reply.text; // eslint-disable-line
       }
     } catch (er) {
-      text = await getQ().then((response) => {
-        return response;
-      });
+      text = await getQ().then(response => response);
       warning = 'Howard might be offline. This is a random result.';
     }
     if (this.state.approvedToSpeak) {
@@ -125,7 +122,6 @@ class ChatWithHoward extends Component {
       ]),
     });
   };
-  // offlineSearch = () => getQ().then(response => response);
   approve = () => {
     if (this.state.approvedToSpeak) return this.setState({ approvedToSpeak: false, skipit: false });
     this.speak('oh kay');
