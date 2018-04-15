@@ -77,8 +77,8 @@ const NewText = styled.input`
 const renderConvo = (convo) => {
   const clone = convo.slice(0).reverse();
   return clone.map((c, i) => (
-    <ChatLineWrapper>
-      <ChatBubbleAndTimetamp key={i} align={c.user ? 'flex-start' : 'flex-end'}>
+    <ChatLineWrapper key={i}>
+      <ChatBubbleAndTimetamp align={c.user ? 'flex-start' : 'flex-end'}>
         {c.user && <Timestamp time={c.time} />}
         <Chat key={`${c}`} bg={c.user ? '#FFA500' : '#aaa'}>
           <Text>{c.text}</Text>
