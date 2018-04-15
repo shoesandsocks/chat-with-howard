@@ -9,6 +9,8 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(createDB());
 });
 
+console.log('hello');
+
 // https://stackoverflow.com/questions/45467842/how-to-clear-cache-of-service-worker
 self.addEventListener('activate', (event) => {
   event.waitUntil(caches.keys().then(cacheNames =>

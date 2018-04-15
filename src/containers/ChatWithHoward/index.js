@@ -112,7 +112,6 @@ class ChatWithHoward extends Component {
       }
     } catch (er) {
       text = await getQ().then((response) => {
-        console.log('hello', response);
         return response;
       });
       warning = 'Howard might be offline. This is a random result.';
