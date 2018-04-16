@@ -12,7 +12,10 @@ import { darkBlue, orange } from './utils/palette';
 
 const Header = styled.div`
   background: ${darkBlue};
-  padding: 1em 3em;
+  padding: 1em 0 0 3em;
+  @media (max-width: 600px) {
+    padding: 1em;
+  }
 `;
 
 const MenuAndPage = styled.div`
