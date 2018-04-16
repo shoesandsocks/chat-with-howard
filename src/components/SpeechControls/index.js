@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-import { darkBlue } from '../../utils/palette';
+import { darkBlue, orange } from '../../utils/palette';
 
 const SlideOpen = keyframes`
   0% {
@@ -96,11 +96,11 @@ const Slider = styled.input`
     margin-top: -16px;
     border-radius: 50%;
     background: white;
-    border: 8px solid orange;
+    border: 8px solid ${orange};
     cursor: pointer;
     transition: 0.2s;
     &:hover {
-      background: orange;
+      background: ${orange};
     }
   }
   &::-webkit-slider-runnable-track {
@@ -114,10 +114,10 @@ const Slider = styled.input`
     width: 3em;
     height: 3em;
     border-radius: 50%;
-    border: 8px solid orange;
+    border: 8px solid ${orange};
     transition: 0.2s;
     &:hover {
-      background: orange;
+      background: ${orange};
     }
   }
   &::-moz-range-track {

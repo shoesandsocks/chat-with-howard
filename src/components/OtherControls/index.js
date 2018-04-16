@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// import { darkBlue } from '../../utils/palette';
+import { orange } from '../../utils/palette';
 
 const OtherControlsForm = styled.form`
   padding: 0.5em;
@@ -46,10 +46,10 @@ const Checkbox = styled.input`
   width: 2em;
   margin-left: 0.25em;
   background: white;
-  border: 3px solid orange;
+  border: 3px solid ${orange};
   border-radius: 50%;
   &:checked {
-    background: orange;
+    background: ${orange};
   }
 `;
 

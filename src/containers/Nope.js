@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { darkBlue } from '../utils/palette';
+import { darkBlue, orange } from '../utils/palette';
 
 const NopeWrap = styled.div`
   height: 96vh;
@@ -24,7 +24,7 @@ const Text = styled.p`
 `;
 
 const Big = styled.h1`
-  color: orange;
+  color: ${orange};
   font-family: 'Inconsolata', sans-serif;
   margin: 1em 0 0 0;
   font-size: 3em;
@@ -35,10 +35,10 @@ const BigA = styled.a`
   font-family: 'Inconsolata', sans-serif;
   margin: 1em 0 0 0;
   font-size: 2em;
-  text-decoration-color: orange;
+  text-decoration-color: ${orange};
   transition: all 0.25s;
   &:hover {
-    color: orange;
+    color: ${orange};
   }
 `;
 

@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import Timestamp from './Timestamp';
 
+import { orange } from '../../utils/palette';
+
 const Box = styled.form`
   margin: 1em 0;
   padding: 8px 0 0 4px;
@@ -18,7 +20,7 @@ const Box = styled.form`
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: orange;
+    background: ${orange};
   }
   /* apparently there's no moz equivalent, so it just sucks a little on FF */
 `;

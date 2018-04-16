@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import { darkBlue } from '../../utils/palette';
+import { darkBlue, orange } from '../../utils/palette';
 
 const AboutWrap = styled.div`
-  height: 96vh;
+  height: 92vh;
+  padding-top: 4em;
   background: ${darkBlue};
   display: flex;
   flex-flow: column nowrap;
@@ -12,7 +14,7 @@ const AboutWrap = styled.div`
   align-items: center;
   transition: all 0.3s;
   @media (max-width: 600px) {
-    padding: 1em;
+    /* hi */
   }
 `;
 
@@ -28,20 +30,31 @@ const Big = styled.a`
   font-family: 'Inconsolata', sans-serif;
   margin: 1em 0 0 0;
   font-size: 2em;
-  text-decoration-color: orange;
+  text-decoration-color: ${orange};
   transition: all 0.25s;
   &:hover {
-    color: orange;
+    color: ${orange};
   }
 `;
 
-const About = () => (
-  <AboutWrap>
-    <Text>Chat With Howard is</Text>
-    <Text>inspired by, and </Text>
-    <Text>fed with data from</Text>
-    <Big href="http://www.howardchicken.com">howardchicken.com</Big>
-  </AboutWrap>
-);
+class About extends React.Component {
+  componentDidMount() {
+    this.props.toggle();
+  }
+  render() {
+    return (
+      <AboutWrap>
+        <Text>Chat With Howard is</Text>
+        <Text>inspired by, and </Text>
+        <Text>fed with data from</Text>
+        <Big href="http://www.howardchicken.com">howardchicken.com</Big>
+      </AboutWrap>
+    );
+  }
+}
+
+About.propTypes = {
+  toggle: PropTypes.func.isRequired,
+};
 
 export default About;

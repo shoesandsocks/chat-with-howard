@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -51,6 +52,7 @@ class ChatWithHoward extends Component {
   };
 
   componentDidMount() {
+    this.props.toggle();
     this.getVoices();
   }
 
@@ -185,6 +187,8 @@ class ChatWithHoward extends Component {
     return null;
   };
 
+  close = () => this.setState({ hasError: false });
+
   render() {
     const {
       approvedToSpeak,
@@ -201,7 +205,7 @@ class ChatWithHoward extends Component {
     } = this.state;
     if (hasError) {
       return (
-        <Overlay onClose={() => this.setState({ hasError: false })}>
+        <Overlay onClose={this.close}>
           <p>
             something went terribly wrong. This error was thrown by React&apos;s componentDidCatch
             method (That&apos;s bad.)
@@ -222,10 +226,10 @@ class ChatWithHoward extends Component {
           approve={this.approve}
         />
         <OtherControls
-          approve={this.approve}
           approvedToSpeak={approvedToSpeak}
           skipit={skipit}
           markov={markov}
+          approve={this.approve}
           handleSkipCheckbox={this.handleSkipCheckbox}
           handleCheckbox={this.handleCheckbox}
         />
@@ -241,5 +245,9 @@ class ChatWithHoward extends Component {
     );
   }
 }
+
+ChatWithHoward.propTypes = {
+  toggle: PropTypes.func.isRequired,
+};
 
 export default ChatWithHoward;
