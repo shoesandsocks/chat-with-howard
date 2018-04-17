@@ -62,13 +62,17 @@ const LinksLI = styled.li`
     }
   }
 `;
+const defaultUser = {
+  name: '',
+  avi: '',
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       menuIsOpen: true,
-      user: null,
+      user: defaultUser,
     };
   }
   componentDidMount() {
@@ -81,24 +85,24 @@ class App extends React.Component {
       try {
         let user = jwtDecode(token);
         if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
-          user = null;
+          user = defaultUser;
         }
         this.setState({ user });
       } catch (e) {
-        this.setState({ user: null });
+        this.setState({ user: defaultUser });
       }
     }
   };
 
   handleLogout = () => {
     sessionStorage.setItem('token', null);
-    this.setState({ user: null });
+    this.setState({ user: defaultUser });
   };
 
   toggleMenu = () => this.setState({ menuIsOpen: !this.state.menuIsOpen });
 
   render() {
-    const { user } = this.state;
+    const { user, menuIsOpen } = this.state;
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={props => (user ? <Component {...props} /> : <Redirect to="/" />)} />
     );
@@ -107,7 +111,7 @@ class App extends React.Component {
       <Router>
         <div style={{ overflowX: 'hidden' }}>
           <MenuAndPage>
-            <Menu isOpen={this.state.menuIsOpen} toggle={this.toggleMenu}>
+            <Menu isOpen={menuIsOpen} toggle={this.toggleMenu}>
               <LinksUL>
                 <LinksLI>
                   <Link exact activeStyle={{ color: orange }} to="/">
@@ -138,8 +142,8 @@ class App extends React.Component {
                 )}
               </LinksUL>
             </Menu>
-            <Page isOpen={this.state.menuIsOpen}>
-              <Header user={user} active={this.state.menuIsOpen} action={this.toggleMenu} />
+            <Page isOpen={menuIsOpen}>
+              <Header user={user} active={menuIsOpen} action={this.toggleMenu} />
               <Switch>
                 <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
                 <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />

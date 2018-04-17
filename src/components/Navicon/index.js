@@ -6,6 +6,7 @@ import { darkBlue, orange } from '../../utils/palette';
 
 const Btn = styled.button`
   border: none;
+  cursor: pointer;
   background: ${darkBlue};
   & svg {
     height: 3em;
@@ -13,7 +14,7 @@ const Btn = styled.button`
   }
 `;
 
-const Navicon = ({ user: { name, avi }, action, active }) => (
+const Navicon = ({ action, active }) => (
   <div>
     <Btn onClick={action}>
       <svg
@@ -26,22 +27,12 @@ const Navicon = ({ user: { name, avi }, action, active }) => (
         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
       </svg>
     </Btn>
-    <p>{name}</p>
-    <img src={avi} alt="avatar" />
   </div>
 );
 
 Navicon.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
-  user: PropTypes.object,
-};
-
-Navicon.defaultProps = {
-  user: {
-    name: '',
-    avi: '',
-  },
 };
 
 export default Navicon;
