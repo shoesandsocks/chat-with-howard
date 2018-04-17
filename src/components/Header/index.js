@@ -27,26 +27,25 @@ const HeaderWrap = styled.div`
 `;
 
 const Header = (props) => {
-  let showUser = true;
   const {
     action,
     active,
     user: { name, avi },
   } = props;
-  if (name === '') {
-    showUser = false;
-  }
   return (
     <HeaderWrap>
       <Navicon action={action} active={active} />
-      {showUser && <span>{name}</span>}
-      {showUser && <img src={avi} alt="avatar" />}
+      {name && <span>{name}</span>}
+      {name && <img src={avi} alt="avatar" />}
     </HeaderWrap>
   );
 };
 
 Header.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    avi: PropTypes.string,
+  }).isRequired,
   action: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
 };

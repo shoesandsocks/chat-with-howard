@@ -28,7 +28,7 @@ const link = `https://slack.com/oauth/authorize?scope=${scope}&client_id=${cli}&
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    console.log('constructor in LoginPage', props);
+    // console.log('constructor in LoginPage', props);
   }
 
   componentDidMount() {

@@ -63,8 +63,8 @@ const LinksLI = styled.li`
   }
 `;
 const defaultUser = {
-  name: '',
-  avi: '',
+  name: null,
+  avi: null,
 };
 
 class App extends React.Component {
@@ -104,7 +104,10 @@ class App extends React.Component {
   render() {
     const { user, menuIsOpen } = this.state;
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={props => (user ? <Component {...props} /> : <Redirect to="/" />)} />
+      <Route
+        {...rest}
+        render={props => (user.name ? <Component {...props} /> : <Redirect to="/" />)}
+      />
     );
 
     return (
@@ -121,21 +124,21 @@ class App extends React.Component {
                 <Link activeStyle={{ color: orange }} to="/about">
                   About
                 </Link>
-                {!user && (
+                {!user.name && (
                   <LinksLI>
                     <Link activeStyle={{ color: orange }} to="/login">
                       Login
                     </Link>
                   </LinksLI>
                 )}
-                {user && (
+                {user.name && (
                   <LinksLI>
                     <Link activeStyle={{ color: orange }} to="/members">
                       Members
                     </Link>
                   </LinksLI>
                 )}
-                {user && (
+                {user.name && (
                   <LinksLI>
                     <button onClick={this.handleLogout}>Logout</button>
                   </LinksLI>
