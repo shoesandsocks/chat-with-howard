@@ -13,16 +13,51 @@ const MembersOnlyWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   transition: all 0.3s;
+  & p {
+    color: white;
+  }
   @media (max-width: 600px) {
     /* hi */
   }
 `;
 
 class MembersOnly extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.getHowardSettings();
+  }
+
+  getHowardSettings = () => {
+    fetch('/howardsettings', {
+      headers: {
+        token: sessionStorage.getItem('token'),
+      },
+    }).then((response) => {
+      console.log(response.data);
+      this.setState({
+        status: response.data.status,
+        mouthiness: response.data.mouthiness,
+        hushed: response.data.hushed,
+      });
+    });
+  };
 
   render() {
-    return <MembersOnlyWrap>hi member</MembersOnlyWrap>;
+    const { status, mouthiness, hushed } = this.state;
+    if (!status) {
+      return (
+        <MembersOnlyWrap>
+          <p>loading...</p>
+        </MembersOnlyWrap>
+      );
+    }
+    return (
+      <MembersOnlyWrap>
+        <p>Howard Status:</p>
+        <p>Mouthiness: {mouthiness}%</p>
+        <p>Hushed: {hushed ? 'true' : 'false'}</p>
+        <p>Status: {status ? 'on' : 'off'}</p>
+      </MembersOnlyWrap>
+    );
   }
 }
 
