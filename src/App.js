@@ -135,9 +135,11 @@ class App extends React.Component {
                     Home
                   </Link>
                 </LinksLI>
-                <Link activeStyle={{ color: orange }} to="/about">
-                  About
-                </Link>
+                <LinksLI>
+                  <Link activeStyle={{ color: orange }} to="/about">
+                    About
+                  </Link>
+                </LinksLI>
                 {!user && (
                   <LinksLI>
                     <Link activeStyle={{ color: orange }} to="/login">
