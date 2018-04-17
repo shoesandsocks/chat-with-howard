@@ -155,7 +155,10 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
                 <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />
                 <Route path="/chat" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
-                <Route path="/login" render={() => <LoginPage user={user} setUser={setUser} />} />
+                <Route
+                  path="/login"
+                  render={() => <LoginPage user={user} setUser={this.setUser} />}
+                />
                 <PrivateRoute
                   component={() => <MembersOnly user={user} toggle={this.toggleMenu} />}
                   path="/members"
