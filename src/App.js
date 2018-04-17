@@ -162,12 +162,12 @@ class App extends React.Component {
             <Page isOpen={menuIsOpen}>
               <Header user={user} active={menuIsOpen} action={this.toggleMenu} />
               <Switch>
-                <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
-                <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />
-                <Route path="/chat" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
+                <Route exact path="/" render={() => <ChatWithHoward />} />
+                <Route path="/about" render={() => <About />} />
+                <Route path="/chat" render={() => <ChatWithHoward />} />
                 <Route path="/login" render={() => <LoginPage setUser={this.setUser} />} />
                 <PrivateRoute
-                  component={() => <MembersOnly user={user} toggle={this.toggleMenu} />}
+                  component={() => <MembersOnly user={user} />}
                   authed={this.isAuthed()}
                   path="/members"
                 />

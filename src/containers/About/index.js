@@ -38,9 +38,7 @@ const Big = styled.a`
 `;
 
 class About extends React.Component {
-  componentDidMount() {
-    this.props.toggle();
-  }
+  componentDidMount() {}
   render() {
     return (
       <AboutWrap>
@@ -53,8 +51,6 @@ class About extends React.Component {
   }
 }
 
-About.propTypes = {
-  toggle: PropTypes.func.isRequired,
-};
+About.propTypes = {};
 
 export default About;

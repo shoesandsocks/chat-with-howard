@@ -52,7 +52,6 @@ class ChatWithHoward extends Component {
   };
 
   componentDidMount() {
-    this.props.toggle();
     this.getVoices();
   }
 
