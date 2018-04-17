@@ -27,12 +27,15 @@ class MembersOnly extends React.Component {
     status: '',
     mouthiness: '',
     hushed: '',
+    isLoading: false,
+    error: '',
   };
   componentDidMount() {
     this.getHowardSettings();
   }
 
   getHowardSettings = () => {
+    this.setState({ isLoading: true });
     axios
       .get('/howardsettings', {
         headers: {
@@ -45,19 +48,24 @@ class MembersOnly extends React.Component {
           status: response.data.status,
           mouthiness: response.data.mouthiness,
           hushed: response.data.hushed,
+          isLoading: false,
         });
+      })
+      .catch((e) => {
+        this.setState({ error: e });
       });
   };
 
   render() {
-    const { status, mouthiness, hushed } = this.state;
-    if (status === '') {
+    if (this.state.isLoading) {
       return (
         <MembersOnlyWrap>
           <p>loading...</p>
+          {this.state.error !== '' && <p>...but something has gone wrong.</p>}
         </MembersOnlyWrap>
       );
     }
+    const { status, mouthiness, hushed } = this.state;
     return (
       <MembersOnlyWrap>
         <p>Howard Status:</p>
