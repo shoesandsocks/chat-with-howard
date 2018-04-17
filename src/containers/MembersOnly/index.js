@@ -19,17 +19,13 @@ const MembersOnlyWrap = styled.div`
 `;
 
 class MembersOnly extends React.Component {
-  componentDidMount() {
-    this.props.toggle();
-  }
+  componentDidMount() {}
 
   render() {
     return <MembersOnlyWrap>hi member</MembersOnlyWrap>;
   }
 }
 
-MembersOnly.propTypes = {
-  toggle: PropTypes.func.isRequired,
-};
+MembersOnly.propTypes = {};
 
 export default MembersOnly;
