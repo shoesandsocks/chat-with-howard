@@ -62,17 +62,13 @@ const LinksLI = styled.li`
     }
   }
 `;
-const defaultUser = {
-  name: null,
-  avi: null,
-};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       menuIsOpen: true,
-      user: defaultUser,
+      user: null,
     };
   }
   componentDidMount() {
@@ -82,38 +78,52 @@ class App extends React.Component {
   setUser = user => this.setState({ user });
 
   checkForUser = () => {
-    if (this.state.user.name) return null;
     const token = sessionStorage.getItem('token');
     if (token && token !== null) {
       try {
         let user = jwtDecode(token);
         if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
-          user = defaultUser;
+          user = null;
         }
         return this.setState({ user });
       } catch (e) {
-        return this.setState({ user: defaultUser });
+        return console.log('catch in App cFU', e);
       }
     }
-    return null;
+    return false;
+  };
+
+  isAuthed = () => {
+    const token = sessionStorage.getItem('token');
+    if (token && token !== null) {
+      try {
+        const user = jwtDecode(token);
+        if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
+          return false;
+        }
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
   };
 
   handleLogout = () => {
     sessionStorage.setItem('token', null);
-    this.setState({ user: defaultUser });
+    this.setState({ user: null });
   };
 
   toggleMenu = () => this.setState({ menuIsOpen: !this.state.menuIsOpen });
 
   render() {
     const { user, menuIsOpen } = this.state;
-    const PrivateRoute = ({ component: Component, ...rest }) => (
+    const PrivateRoute = ({ component: Component, authed, ...rest }) => (
       <Route
         {...rest}
-        render={props => (user.name ? <Component {...props} /> : <Redirect to="/" />)}
+        render={props => (authed ? <Component {...props} /> : <Redirect to="/login" />)}
       />
     );
-
     return (
       <Router>
         <div style={{ overflowX: 'hidden' }}>
@@ -128,21 +138,21 @@ class App extends React.Component {
                 <Link activeStyle={{ color: orange }} to="/about">
                   About
                 </Link>
-                {!user.name && (
+                {!user && (
                   <LinksLI>
                     <Link activeStyle={{ color: orange }} to="/login">
                       Login
                     </Link>
                   </LinksLI>
                 )}
-                {user.name && (
+                {user && (
                   <LinksLI>
                     <Link activeStyle={{ color: orange }} to="/members">
                       Members
                     </Link>
                   </LinksLI>
                 )}
-                {user.name && (
+                {user && (
                   <LinksLI>
                     <button onClick={this.handleLogout}>Logout</button>
                   </LinksLI>
@@ -155,12 +165,10 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
                 <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />
                 <Route path="/chat" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
-                <Route
-                  path="/login"
-                  render={() => <LoginPage user={user} setUser={this.setUser} />}
-                />
+                <Route path="/login" render={() => <LoginPage setUser={this.setUser} />} />
                 <PrivateRoute
                   component={() => <MembersOnly user={user} toggle={this.toggleMenu} />}
+                  authed={this.isAuthed()}
                   path="/members"
                 />
                 <Route component={Nope} />

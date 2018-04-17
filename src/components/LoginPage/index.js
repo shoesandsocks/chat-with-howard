@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import jwtDecode from 'jwt-decode';
 
 import { darkBlue } from '../../utils/palette';
 
@@ -44,9 +45,6 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    // if (this.props.user) {
-    //   return window.location.replace(`${url.origin}/members`);
-    // }
     return (
       <LoginWrap>
         <Text>Sign in with your Tumblrrs Slack account</Text>

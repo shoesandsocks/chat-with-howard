@@ -27,11 +27,19 @@ const HeaderWrap = styled.div`
 `;
 
 const Header = (props) => {
-  const {
-    action,
-    active,
-    user: { name, avi },
-  } = props;
+  const { action, active } = props;
+  let name;
+  let avi;
+
+  if (!props.user) {
+    console.log('no user');
+    name = '';
+    avi = '';
+  } else {
+    name = props.user.name; // eslint-disable-line
+    avi = props.user.avi; // eslint-disable-line
+  }
+
   return (
     <HeaderWrap>
       <Navicon action={action} active={active} />
@@ -42,12 +50,19 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
+  action: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     avi: PropTypes.string,
-  }).isRequired,
-  action: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
+  }),
+};
+
+Header.defaultProps = {
+  user: {
+    name: '',
+    avi: '',
+  },
 };
 
 export default Header;
