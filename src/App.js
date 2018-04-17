@@ -109,10 +109,7 @@ class App extends React.Component {
     const { user } = this.state;
     console.log(user);
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route
-        {...rest}
-        render={props => (user ? <Component {...props} user={user} /> : <Redirect to="/" />)}
-      />
+      <Route {...rest} render={props => (user ? <Component {...props} /> : <Redirect to="/" />)} />
     );
 
     return (
@@ -164,10 +161,8 @@ class App extends React.Component {
                   render={() => <LoginPage user={user} toggle={this.toggleMenu} />}
                 />
                 <PrivateRoute
-                  toggle={this.toggleMenu}
-                  component={MembersOnly}
+                  component={() => <MembersOnly user={user} toggle={this.toggleMenu} />}
                   path="/members"
-                  // render={() => <MembersOnly toggle={this.toggleMenu} />}
                 />
                 <Route component={Nope} />
               </Switch>
