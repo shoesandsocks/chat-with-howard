@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import { darkBlue } from '../../utils/palette';
 
@@ -32,18 +33,20 @@ class MembersOnly extends React.Component {
   }
 
   getHowardSettings = () => {
-    fetch('/howardsettings', {
-      headers: {
-        token: sessionStorage.getItem('token'),
-      },
-    }).then((response) => {
-      console.log(response.data);
-      this.setState({
-        status: response.data.status,
-        mouthiness: response.data.mouthiness,
-        hushed: response.data.hushed,
+    axios
+      .get('/howardsettings', {
+        headers: {
+          token: sessionStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          status: response.data.status,
+          mouthiness: response.data.mouthiness,
+          hushed: response.data.hushed,
+        });
       });
-    });
   };
 
   render() {
