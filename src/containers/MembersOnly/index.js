@@ -22,6 +22,11 @@ const MembersOnlyWrap = styled.div`
 `;
 
 class MembersOnly extends React.Component {
+  state = {
+    status: '',
+    mouthiness: '',
+    hushed: '',
+  };
   componentDidMount() {
     this.getHowardSettings();
   }
@@ -43,7 +48,7 @@ class MembersOnly extends React.Component {
 
   render() {
     const { status, mouthiness, hushed } = this.state;
-    if (!status) {
+    if (status === '') {
       return (
         <MembersOnlyWrap>
           <p>loading...</p>
