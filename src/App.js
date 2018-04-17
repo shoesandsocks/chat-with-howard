@@ -79,7 +79,10 @@ class App extends React.Component {
     this.checkForUser();
   }
 
+  setUser = user => this.setState({ user });
+
   checkForUser = () => {
+    if (this.state.user.name) return null;
     const token = sessionStorage.getItem('token');
     if (token && token !== null) {
       try {
@@ -87,11 +90,12 @@ class App extends React.Component {
         if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
           user = defaultUser;
         }
-        this.setState({ user });
+        return this.setState({ user });
       } catch (e) {
-        this.setState({ user: defaultUser });
+        return this.setState({ user: defaultUser });
       }
     }
+    return null;
   };
 
   handleLogout = () => {
@@ -151,10 +155,7 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
                 <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />
                 <Route path="/chat" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
-                <Route
-                  path="/login"
-                  render={() => <LoginPage user={user} toggle={this.toggleMenu} />}
-                />
+                <Route path="/login" render={() => <LoginPage user={user} setUser={setUser} />} />
                 <PrivateRoute
                   component={() => <MembersOnly user={user} toggle={this.toggleMenu} />}
                   path="/members"

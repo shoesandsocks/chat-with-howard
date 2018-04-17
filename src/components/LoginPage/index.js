@@ -26,22 +26,17 @@ const scope = 'identity.basic,identity.avatar';
 const link = `https://slack.com/oauth/authorize?scope=${scope}&client_id=${cli}&redirect_uri=${uri}`;
 
 class LoginPage extends React.Component {
-  constructor(props) {
-    super(props);
-    // console.log('constructor in LoginPage', props);
-  }
-
   componentDidMount() {
-    this.props.toggle();
     try {
       const url = new URL(window.location);
       const params = new URLSearchParams(url.search);
       const token = params.get('token');
       if (token) {
+        this.props.setUser(jwtDecode(token));
         sessionStorage.setItem('token', token);
         setTimeout(() => {
           window.location.replace(`${url.origin}/members`);
-        }, 2000);
+        }, 1000);
       }
     } catch (e) {
       console.log(e);
@@ -71,7 +66,7 @@ class LoginPage extends React.Component {
 }
 
 LoginPage.propTypes = {
-  toggle: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default LoginPage;
