@@ -35,9 +35,7 @@ class LoginPage extends React.Component {
       if (token) {
         this.props.setUser(jwtDecode(token));
         sessionStorage.setItem('token', token);
-        setTimeout(() => {
-          window.location.replace(`${url.origin}/members`);
-        }, 1000);
+        window.location.replace(`${url.origin}/members`);
       }
     } catch (e) {
       console.log(e);

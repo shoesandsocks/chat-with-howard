@@ -1,16 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-// import { darkBlue } from '../../utils/palette';
+import { darkBlue } from '../../utils/palette';
+
+const MembersOnlyWrap = styled.div`
+  height: 92vh;
+  padding-top: 4em;
+  background: ${darkBlue};
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  transition: all 0.3s;
+  @media (max-width: 600px) {
+    /* hi */
+  }
+`;
 
 class MembersOnly extends React.Component {
   componentDidMount() {
-    // this.props.toggle();
+    this.props.toggle();
   }
 
   render() {
-    return <div>hi member</div>;
+    return <MembersOnlyWrap>hi member</MembersOnlyWrap>;
   }
 }
 
