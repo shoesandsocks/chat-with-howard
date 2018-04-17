@@ -34,8 +34,14 @@ const Navicon = ({ user: { name, avi }, action, active }) => (
 Navicon.propTypes = {
   action: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
+  user: PropTypes.object,
 };
 
-Navicon.defaultProps = {};
+Navicon.defaultProps = {
+  user: {
+    name: '',
+    avi: '',
+  },
+};
 
 export default Navicon;
