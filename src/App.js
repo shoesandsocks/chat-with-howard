@@ -15,17 +15,9 @@ import About from './containers/About';
 import Nope from './containers/Nope';
 import MembersOnly from './containers/MembersOnly';
 import LoginPage from './components/LoginPage';
-import Navicon from './components/Navicon';
+import Header from './components/Header';
 
 import { darkBlue, orange } from './utils/palette';
-
-const Header = styled.div`
-  background: ${darkBlue};
-  padding: 1em 0 0 3em;
-  @media (max-width: 600px) {
-    padding: 1em;
-  }
-`;
 
 const MenuAndPage = styled.div`
   display: flex;
@@ -107,7 +99,6 @@ class App extends React.Component {
 
   render() {
     const { user } = this.state;
-    console.log(user);
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={props => (user ? <Component {...props} /> : <Redirect to="/" />)} />
     );
@@ -148,10 +139,7 @@ class App extends React.Component {
               </LinksUL>
             </Menu>
             <Page isOpen={this.state.menuIsOpen}>
-              <Header user={user}>
-                <Navicon active={this.state.menuIsOpen} action={this.toggleMenu} />
-              </Header>
-
+              <Header user={user} active={this.state.menuIsOpen} action={this.toggleMenu} />
               <Switch>
                 <Route exact path="/" render={() => <ChatWithHoward toggle={this.toggleMenu} />} />
                 <Route path="/about" render={() => <About toggle={this.toggleMenu} />} />

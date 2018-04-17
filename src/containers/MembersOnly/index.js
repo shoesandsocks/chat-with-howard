@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 class MembersOnly extends React.Component {
   componentDidMount() {
-    this.props.toggle();
+    // this.props.toggle();
   }
 
   render() {

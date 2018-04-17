@@ -47,9 +47,9 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    if (this.props.user) {
-      return window.location.replace(`${url.origin}/members`);
-    }
+    // if (this.props.user) {
+    //   return window.location.replace(`${url.origin}/members`);
+    // }
     return (
       <LoginWrap>
         <Text>Sign in with your Tumblrrs Slack account</Text>
