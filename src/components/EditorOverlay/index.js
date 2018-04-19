@@ -48,7 +48,7 @@ const EditorOverlay = ({
   editChannelName,
   editCron,
   editJobName,
-  cronServerRequest,
+  handleDelete,
   originalName,
   handleEditChange,
   channels,
@@ -66,7 +66,7 @@ const EditorOverlay = ({
     <OverlayForm onSubmit={null}>
       {adding && <p>Add new job...</p>}
       {!adding && <p>Edit this job, or</p>}
-      <Button buttonColor="crimson" onClick={() => cronServerRequest('delete', originalName)}>
+      <Button buttonColor="crimson" onClick={handleDelete(originalName)}>
         {adding ? 'Close' : 'Delete'}
       </Button>
       <CloseButton onClick={closeWithNoAction}>
@@ -111,7 +111,7 @@ EditorOverlay.propTypes = {
   editCron: PropTypes.string.isRequired,
   editJobName: PropTypes.string.isRequired,
   originalName: PropTypes.string.isRequired,
-  cronServerRequest: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   handleEditChange: PropTypes.func.isRequired,
   closeWithNoAction: PropTypes.func.isRequired,
   adding: PropTypes.bool.isRequired,

@@ -213,6 +213,11 @@ class ScheduleForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleDelete = (jobName) => {
+    this.cronServerRequest('delete', jobName);
+    this.closeWithNoAction();
+  }
+
   closeOverlay = () => {
     const potentialJob = {
       jobName: this.state.editJobName,
@@ -227,6 +232,7 @@ class ScheduleForm extends Component {
     }
     return this.closeWithNoAction();
   };
+
   renderJobs = array =>
     array.map(job => (
       <TableRs key={job.jobName} onClick={() => this.handleOpenEditor(job)}>
@@ -259,7 +265,7 @@ class ScheduleForm extends Component {
             editJobName={editJobName}
             editChannelName={editChannelName}
             originalName={adding ? {} : this.state.originalCron.jobName}
-            cronServerRequest={this.cronServerRequest}
+            handleDelete={this.handleDelete}
             handleEditChange={this.handleEditChange}
             closeWithNoAction={this.closeWithNoAction}
           />
