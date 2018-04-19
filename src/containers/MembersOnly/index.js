@@ -48,13 +48,17 @@ const Break = styled.div`
 `;
 
 class MembersOnly extends React.Component {
-  state = {
-    status: '',
-    mouthiness: '',
-    hushed: '',
-    isLoading: false,
-    error: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: '',
+      mouthiness: '',
+      hushed: '',
+      isLoading: false,
+      error: '',
+    };
+  }
+
   componentDidMount() {
     this.getHowardSettings();
   }
@@ -99,7 +103,7 @@ class MembersOnly extends React.Component {
           <BarSpan>Hushed? {hushed ? 'yes' : 'no'}</BarSpan>
         </StatusBar>
         <Break />
-        <ScheduleForm tumblr_id={this.props.tumblr_id} />
+        <ScheduleForm tumblr_id={this.props.user.tumblr_id} />
       </MembersOnlyWrap>
     );
   }
