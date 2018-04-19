@@ -28,7 +28,6 @@ class ScheduleForm extends Component {
   }
 
   getCrons = () => {
-    // get ID from token
     const token = sessionStorage.getItem('token'); // eslint-disable-line
     const { tumblr_id } = jwtDecode(token);
     this.setState({ isLoading: true, message: null });
@@ -43,7 +42,6 @@ class ScheduleForm extends Component {
       });
   };
   render() {
-    const { tumblr_id } = this.props;
     const { userCronJobs, isLoading, message } = this.state;
     if (isLoading) {
       return (
@@ -55,8 +53,7 @@ class ScheduleForm extends Component {
     }
     return (
       <FormWrap>
-        <p>id: {tumblr_id}</p>
-        <p>number of jobs: {userCronJobs.length}</p>
+        <p>You have {userCronJobs.length} jobs set</p>
       </FormWrap>
     );
   }

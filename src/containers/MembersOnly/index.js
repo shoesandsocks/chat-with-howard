@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -86,7 +86,7 @@ class MembersOnly extends React.Component {
   };
 
   render() {
-    if (this.state.isLoading || !this.props.user.tumblr_id) {
+    if (this.state.isLoading) {
       return (
         <MembersOnlyWrap>
           <p>loading...</p>
@@ -103,14 +103,12 @@ class MembersOnly extends React.Component {
           <BarSpan>Hushed? {hushed ? 'yes' : 'no'}</BarSpan>
         </StatusBar>
         <Break />
-        <ScheduleForm tumblr_id={this.props.user.tumblr_id} />
+        <ScheduleForm />
       </MembersOnlyWrap>
     );
   }
 }
 
-MembersOnly.propTypes = {
-  tumblr_id: PropTypes.string.isRequired,
-};
+MembersOnly.propTypes = {};
 
 export default MembersOnly;
