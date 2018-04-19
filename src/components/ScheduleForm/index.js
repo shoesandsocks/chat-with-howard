@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import { darkBlue } from '../../utils/palette';
 
@@ -28,15 +29,13 @@ class ScheduleForm extends Component {
 
   getCrons = () => {
     // get ID from token
-    const { tumblr_id } = this.props;
     const token = sessionStorage.getItem('token'); // eslint-disable-line
+    const { tumblr_id } = jwtDecode(token);
     this.setState({ isLoading: true, message: null });
     return axios
-      .post('/howardcron', { tumblr_id }, { headers: { token } }) // TODO: right? uri, options, data?
+      .post('/howardcron', { tumblr_id }, { headers: { token } })
       .then((response) => {
-        console.log(response.data);
-
-        this.setState({ userCronJobs: response.data.usersJobs, isLoading: false });
+        this.setState({ userCronJobs: response.data.usersJobs[0], isLoading: false });
       })
       .catch((e) => {
         console.log('something went wrong in getCrons: ', e); // eslint-disable-line
@@ -63,8 +62,6 @@ class ScheduleForm extends Component {
   }
 }
 
-ScheduleForm.propTypes = {
-  tumblr_id: PropTypes.string.isRequired,
-};
+ScheduleForm.propTypes = {};
 
 export default ScheduleForm;

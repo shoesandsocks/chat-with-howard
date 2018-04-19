@@ -86,7 +86,7 @@ class MembersOnly extends React.Component {
   };
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading || !this.props.user.tumblr_id) {
       return (
         <MembersOnlyWrap>
           <p>loading...</p>
