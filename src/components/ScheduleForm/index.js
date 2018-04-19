@@ -34,7 +34,10 @@ class ScheduleForm extends Component {
     return axios
       .post('/howardcron', { tumblr_id }, { headers: { token } })
       .then((response) => {
-        this.setState({ userCronJobs: response.data.usersJobs[0], isLoading: false });
+        this.setState({
+          userCronJobs: response.data.usersJobs[0].activeCronJobs,
+          isLoading: false,
+        });
       })
       .catch((e) => {
         console.log('something went wrong in getCrons: ', e); // eslint-disable-line

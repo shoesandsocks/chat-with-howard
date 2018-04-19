@@ -38,13 +38,14 @@ const StatusBar = styled.div`
 const BarSpan = styled.span`
   margin: 0 1em;
   color: white;
+  font: 0.8em 'Inconsolata', sans-serif;
 `;
 
 const Break = styled.div`
   background: white;
   height: 2px;
   width: 80%;
-  margin: 2em 0;
+  margin: ${props => (props.margin ? props.margin : '2em 0')};
 `;
 
 class MembersOnly extends React.Component {
@@ -72,7 +73,6 @@ class MembersOnly extends React.Component {
         },
       })
       .then((response) => {
-        // console.log(response);
         this.setState({
           status: response.data.status,
           mouthiness: response.data.mouthiness,
@@ -97,13 +97,16 @@ class MembersOnly extends React.Component {
     const { status, mouthiness, hushed } = this.state;
     return (
       <MembersOnlyWrap>
+        <Break margin=".25em 0" />
         <StatusBar>
           <BarSpan>Howard Status: {status ? 'on' : 'off'}</BarSpan>
           <BarSpan>Mouthiness: {mouthiness}%</BarSpan>
           <BarSpan>Hushed? {hushed ? 'yes' : 'no'}</BarSpan>
         </StatusBar>
+        <Break margin=".25em 0" />
         <Break />
         <ScheduleForm />
+        <Break />
       </MembersOnlyWrap>
     );
   }

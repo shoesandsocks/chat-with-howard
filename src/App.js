@@ -91,7 +91,7 @@ class App extends React.Component {
         }
         return this.setState({ user });
       } catch (e) {
-        return console.log('catch in App cFU: ', e);
+        return console.log('catch in App cFU: ', e); // eslint-disable-line
       }
     }
     return false;
