@@ -204,6 +204,7 @@ class ScheduleForm extends Component {
       editJobName: '',
       editChannelName: '',
       originalCron: {},
+      adding: false,
     });
   };
 
@@ -223,7 +224,9 @@ class ScheduleForm extends Component {
       channelName: this.state.editChannelName,
       cronSked: this.state.editCron,
     };
-    if (Object.values(potentialJob).sort() !== Object.values(this.state.originalCron).sort()) {
+    if (this.state.adding) {
+      this.cronServerRequest('add', potentialJob);
+    } else if (Object.values(potentialJob).sort() !== Object.values(this.state.originalCron).sort()) {
       this.cronServerRequest('delete', this.state.originalCron.jobName);
       setTimeout(() => {
         this.cronServerRequest('add', potentialJob);
