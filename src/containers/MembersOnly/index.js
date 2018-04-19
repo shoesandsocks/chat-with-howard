@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import ScheduleForm from '../../components/ScheduleForm';
+
 import { darkBlue } from '../../utils/palette';
 
 const MembersOnlyWrap = styled.div`
@@ -20,6 +22,29 @@ const MembersOnlyWrap = styled.div`
   @media (max-width: 600px) {
     /* hi */
   }
+`;
+const StatusBar = styled.div`
+  height: 2em;
+  width: 67%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
+const BarSpan = styled.span`
+  margin: 0 1em;
+  color: white;
+`;
+
+const Break = styled.div`
+  background: white;
+  height: 2px;
+  width: 80%;
+  margin: 2em 0;
 `;
 
 class MembersOnly extends React.Component {
@@ -39,11 +64,11 @@ class MembersOnly extends React.Component {
     axios
       .get('/howardsettings', {
         headers: {
-          token: sessionStorage.getItem('token'),
+          token: sessionStorage.getItem('token'), // eslint-disable-line
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         this.setState({
           status: response.data.status,
           mouthiness: response.data.mouthiness,
@@ -68,10 +93,13 @@ class MembersOnly extends React.Component {
     const { status, mouthiness, hushed } = this.state;
     return (
       <MembersOnlyWrap>
-        <p>Howard Status:</p>
-        <p>Mouthiness: {mouthiness}%</p>
-        <p>Hushed: {hushed ? 'true' : 'false'}</p>
-        <p>Status: {status ? 'on' : 'off'}</p>
+        <StatusBar>
+          <BarSpan>Howard Status: {status ? 'on' : 'off'}</BarSpan>
+          <BarSpan>Mouthiness: {mouthiness}%</BarSpan>
+          <BarSpan>Hushed? {hushed ? 'yes' : 'no'}</BarSpan>
+        </StatusBar>
+        <Break />
+        <ScheduleForm />
       </MembersOnlyWrap>
     );
   }

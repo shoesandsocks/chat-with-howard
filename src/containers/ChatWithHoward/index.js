@@ -70,8 +70,8 @@ class ChatWithHoward extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.log(error);
-    console.log(info);
+    console.log(error); // eslint-disable-line
+    console.log(info); // eslint-disable-line
     this.setState(state => ({ ...state, hasError: true }));
   }
 

@@ -11,5 +11,6 @@ module.exports = {
         specialLink: ['to'],
       },
     ],
+    camelcase: 0,
   },
 };
