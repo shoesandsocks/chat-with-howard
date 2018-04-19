@@ -110,9 +110,30 @@ const AddBtn = styled.button`
 
 class ScheduleForm extends Component {
   state = {
-    // DEV
     userCronJobs: [],
     channels: [],
+    // DEV
+    // userCronJobs: [
+    //   {
+    //     jobName: 'x',
+    //     channelName: 'y',
+    //     cronSked: '*/4 * * * *',
+    //   },
+    // ],
+    // channels: [
+    //   {
+    //     name: 'y',
+    //     id: '123',
+    //   },
+    //   {
+    //     name: 'x',
+    //     id: '1323',
+    //   },
+    //   {
+    //     name: 'z',
+    //     id: '123r3',
+    //   },
+    // ],
     isLoading: false,
     message: null,
     overlayIsOpen: false,
@@ -187,6 +208,8 @@ class ScheduleForm extends Component {
 
   handleEditChange = (e) => {
     e.preventDefault();
+    console.log(e.target);
+
     this.setState({ [e.target.name]: e.target.value });
   };
 

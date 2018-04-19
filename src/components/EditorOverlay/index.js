@@ -56,7 +56,11 @@ const EditorOverlay = ({
   closeWithNoAction,
 }) => {
   const renderOptions = array =>
-    array.map(channel => <option key={channel.id}>{channel.name}</option>);
+    array.map(channel => (
+      <option value={channel.name} key={channel.id}>
+        {channel.name}
+      </option>
+    ));
 
   return (
     <OverlayForm onSubmit={null}>
