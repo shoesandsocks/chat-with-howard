@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 
 import { darkBlue } from '../../utils/palette';
 
@@ -20,30 +19,24 @@ class ScheduleForm extends Component {
   state = {
     userCronJobs: [],
     isLoading: false,
-    tumblr_id: '',
     message: null,
   };
 
   componentDidMount() {
     this.getCrons();
   }
+
   getCrons = () => {
     // get ID from token
-    let tumblr_id;
-    let token;
-    try {
-      token = sessionStorage.getItem('token'); // eslint-disable-line
-      if (token && token !== null) {
-        tumblr_id = jwtDecode(token).tumblr_id; // eslint-disable-line
-      }
-    } catch (e) {
-      return console.log('getting token/tumblr_id failed: ', e); // eslint-disable-line
-    }
-    this.setState({ isLoading: true, message: null, tumblr_id });
+    const { tumblr_id } = this.props;
+    const token = sessionStorage.getItem('token'); // eslint-disable-line
+    this.setState({ isLoading: true, message: null });
     return axios
       .post('/howardcron', { headers: { token } }, { tumblr_id }) // TODO: right? uri, options, data?
       .then((response) => {
-        this.setState({ tumblr_id, userCronJobs: response.data.usersJobs, isLoading: false });
+        console.log(response.data);
+
+        this.setState({ userCronJobs: response.data.usersJobs, isLoading: false });
       })
       .catch((e) => {
         console.log('something went wrong in getCrons: ', e); // eslint-disable-line
@@ -51,9 +44,8 @@ class ScheduleForm extends Component {
       });
   };
   render() {
-    const {
-      userCronJobs, isLoading, tumblr_id, message,
-    } = this.state;
+    const { tumblr_id } = this.props;
+    const { userCronJobs, isLoading, message } = this.state;
     if (isLoading) {
       return (
         <FormWrap>
@@ -71,5 +63,8 @@ class ScheduleForm extends Component {
   }
 }
 
-ScheduleForm.propTypes = {};
+ScheduleForm.propTypes = {
+  tumblr_id: PropTypes.string.isRequired,
+};
+
 export default ScheduleForm;
