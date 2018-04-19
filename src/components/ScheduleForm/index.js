@@ -32,7 +32,7 @@ class ScheduleForm extends Component {
     const token = sessionStorage.getItem('token'); // eslint-disable-line
     this.setState({ isLoading: true, message: null });
     return axios
-      .post('/howardcron', { headers: { token } }, { tumblr_id }) // TODO: right? uri, options, data?
+      .post('/howardcron', { data: { tumblr_id } }, { headers: { token } }) // TODO: right? uri, options, data?
       .then((response) => {
         console.log(response.data);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -99,12 +99,14 @@ class MembersOnly extends React.Component {
           <BarSpan>Hushed? {hushed ? 'yes' : 'no'}</BarSpan>
         </StatusBar>
         <Break />
-        <ScheduleForm />
+        <ScheduleForm tumblr_id={this.props.tumblr_id} />
       </MembersOnlyWrap>
     );
   }
 }
 
-MembersOnly.propTypes = {};
+MembersOnly.propTypes = {
+  tumblr_id: PropTypes.string.isRequired,
+};
 
 export default MembersOnly;
