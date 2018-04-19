@@ -95,7 +95,7 @@ const EditorOverlay = ({
         value={editChannelName}
         onChange={handleEditChange}
       >
-        {renderOptions(channels)}
+        {channels.length > 0 && renderOptions(channels)}
       </Select>
     </OverlayForm>
   );
