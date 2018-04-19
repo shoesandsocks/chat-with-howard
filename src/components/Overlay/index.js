@@ -8,17 +8,17 @@ const OverlayDiv = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 260px;
-  height: 200px;
-  margin-left: -130px;
-  margin-top: -100px;
+  width: 400px;
+  height: 300px;
+  margin-left: -200px;
+  margin-top: -150px;
   background-color: #fff;
   text-align: center;
   outline: 9999px solid rgba(0, 0, 0, 0.5);
 `;
 
-const RedButton = styled.button`
-  background: crimson;
+const Button = styled.button`
+  background: ${props => props.buttonColor};
   color: white;
   font-size: 1em;
   padding: 0.5em 1em;
@@ -44,7 +44,9 @@ class Overlay extends React.Component {
     return ReactDOM.createPortal(
       <OverlayDiv>
         {this.props.children}
-        <RedButton onClick={this.props.onClose}>Refresh</RedButton>
+        <Button buttonColor={this.props.buttonColor} onClick={this.props.onClose}>
+          {this.props.buttonName}
+        </Button>
       </OverlayDiv>,
       this.overlayContainer,
     );
@@ -54,6 +56,13 @@ class Overlay extends React.Component {
 Overlay.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  buttonName: PropTypes.string,
+  buttonColor: PropTypes.string,
+};
+
+Overlay.defaultProps = {
+  buttonName: 'Refresh',
+  buttonColor: 'crimson',
 };
 
 export default Overlay;

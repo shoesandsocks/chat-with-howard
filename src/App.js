@@ -71,12 +71,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuIsOpen: true,
+      menuIsOpen: false,
       user: null,
     };
   }
   componentDidMount() {
-    this.checkForUser();
+    // this.checkForUser();
   }
 
   setUser = user => this.setState({ user });
@@ -98,6 +98,7 @@ class App extends React.Component {
   };
 
   isAuthed = () => {
+    // return true; // DEV
     const token = sessionStorage.getItem('token');
     if (token && token !== null) {
       try {

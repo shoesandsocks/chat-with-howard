@@ -31,20 +31,24 @@ const StatusBar = styled.div`
   justify-content: space-around;
   align-items: center;
   @media (max-width: 600px) {
-    width: 100%;
+    width: 85%;
   }
 `;
 
 const BarSpan = styled.span`
-  margin: 0 1em;
+  margin: 0 0.5em;
   color: white;
-  font: 0.8em 'Inconsolata', sans-serif;
+  font: 1em 'Inconsolata', sans-serif;
+  @media (max-width: 600px) {
+    margin: 0.25em;
+    font-size: 0.8em;
+  }
 `;
 
 const Break = styled.div`
   background: white;
   height: 2px;
-  width: 80%;
+  width: 85%;
   margin: ${props => (props.margin ? props.margin : '2em 0')};
 `;
 
@@ -61,7 +65,7 @@ class MembersOnly extends React.Component {
   }
 
   componentDidMount() {
-    this.getHowardSettings();
+    this.getHowardSettings(); // DEV
   }
 
   getHowardSettings = () => {
