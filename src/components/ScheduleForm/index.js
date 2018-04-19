@@ -124,7 +124,7 @@ class ScheduleForm extends Component {
   };
 
   componentDidMount() {
-    // this.cronServerRequest();
+    this.cronServerRequest(); // DEV
   }
 
   cronServerRequest = (action, jobOrName) => {

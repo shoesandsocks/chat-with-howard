@@ -76,7 +76,7 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-    // this.checkForUser();
+    this.checkForUser(); // DEV
   }
 
   setUser = user => this.setState({ user });
