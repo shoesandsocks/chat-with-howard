@@ -66,7 +66,7 @@ const EditorOverlay = ({
     <OverlayForm onSubmit={null}>
       {adding && <p>Add new job...</p>}
       {!adding && <p>Edit this job, or</p>}
-      <Button buttonColor="crimson" onClick={handleDelete(originalName)}>
+      <Button buttonColor="crimson" onClick={() => handleDelete(originalName)}>
         {adding ? 'Close' : 'Delete'}
       </Button>
       <CloseButton onClick={closeWithNoAction}>

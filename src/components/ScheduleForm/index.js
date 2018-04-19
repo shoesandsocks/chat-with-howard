@@ -188,6 +188,7 @@ class ScheduleForm extends Component {
       editJobName: job.jobName,
     });
   };
+
   addNewJob = () => {
     this.setState({
       overlayIsOpen: true,
@@ -208,8 +209,6 @@ class ScheduleForm extends Component {
 
   handleEditChange = (e) => {
     e.preventDefault();
-    console.log(e.target);
-
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -263,7 +262,7 @@ class ScheduleForm extends Component {
             channels={channels}
             editCron={editCron}
             editJobName={editJobName}
-            editChannelName={editChannelName}
+            editChannelName={adding ? 'debug' : editChannelName}
             originalName={adding ? {} : this.state.originalCron.jobName}
             handleDelete={this.handleDelete}
             handleEditChange={this.handleEditChange}
