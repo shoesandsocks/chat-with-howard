@@ -21,6 +21,7 @@ class ScheduleForm extends Component {
     userCronJobs: [],
     isLoading: false,
     tumblr_id: '',
+    message: null,
   };
 
   componentDidMount() {
@@ -38,20 +39,29 @@ class ScheduleForm extends Component {
     } catch (e) {
       return console.log('getting token/tumblr_id failed: ', e); // eslint-disable-line
     }
-    this.setState({ isLoading: true, tumblr_id });
+    this.setState({ isLoading: true, message: null, tumblr_id });
     return axios
       .post('/howardcron', { headers: { token } }, { tumblr_id }) // TODO: right? uri, options, data?
       .then((response) => {
-        console.log(response); // eslint-disable-line
-        this.setState({ tumblr_id, userCronJobs: response.data.something, isLoading: false });
+        this.setState({ tumblr_id, userCronJobs: response.data.usersJobs, isLoading: false });
       })
       .catch((e) => {
         console.log('something went wrong in getCrons: ', e); // eslint-disable-line
+        this.setState({ message: e });
       });
   };
   render() {
-    const { userCronJobs, isLoading, tumblr_id } = this.state;
-    if (isLoading) return <FormWrap>loading...</FormWrap>;
+    const {
+      userCronJobs, isLoading, tumblr_id, message,
+    } = this.state;
+    if (isLoading) {
+      return (
+        <FormWrap>
+          loading...
+          {message && <span>...but something went wrong: {message}</span>}
+        </FormWrap>
+      );
+    }
     return (
       <FormWrap>
         <p>id: {tumblr_id}</p>
