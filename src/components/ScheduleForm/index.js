@@ -139,7 +139,7 @@ class ScheduleForm extends Component {
     overlayIsOpen: false,
     originalCron: {},
     editCron: '',
-    editChannelName: '',
+    editChannelName: ' - Select One - ',
     editJobName: '',
     adding: false,
   };
@@ -167,9 +167,12 @@ class ScheduleForm extends Component {
     return axios
       .post(uri, payload, { headers: { token } })
       .then((response) => {
+        const { usersJobs, channels } = response.data.jobsAndChannels;
+        const { message } = response.data;
+        console.log('Server response message: ', message); // eslint-disable-line
         this.setState({
-          userCronJobs: response.data.usersJobs[0].activeCronJobs,
-          channels: response.data.channels,
+          userCronJobs: usersJobs[0].activeCronJobs,
+          channels,
           isLoading: false,
         });
       })
@@ -219,6 +222,10 @@ class ScheduleForm extends Component {
   }
 
   closeOverlay = () => {
+    if (this.state.editChannelName === ' - Select One - ') {
+      console.log('pick a real channel');
+      return null;
+    }
     const potentialJob = {
       jobName: this.state.editJobName,
       channelName: this.state.editChannelName,
@@ -226,7 +233,9 @@ class ScheduleForm extends Component {
     };
     if (this.state.adding) {
       this.cronServerRequest('add', potentialJob);
-    } else if (Object.values(potentialJob).sort() !== Object.values(this.state.originalCron).sort()) {
+    } else if (
+      Object.values(potentialJob).sort() !== Object.values(this.state.originalCron).sort()
+    ) {
       this.cronServerRequest('delete', this.state.originalCron.jobName);
       setTimeout(() => {
         this.cronServerRequest('add', potentialJob);
@@ -265,7 +274,7 @@ class ScheduleForm extends Component {
             channels={channels}
             editCron={editCron}
             editJobName={editJobName}
-            editChannelName={adding ? 'debug' : editChannelName}
+            editChannelName={editChannelName}
             originalName={adding ? {} : this.state.originalCron.jobName}
             handleDelete={this.handleDelete}
             handleEditChange={this.handleEditChange}
