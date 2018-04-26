@@ -205,7 +205,7 @@ class ScheduleForm extends Component {
       overlayIsOpen: false,
       editCron: '',
       editJobName: '',
-      editChannelName: '',
+      editChannelName: ' - Select One - ',
       originalCron: {},
       adding: false,
     });
@@ -219,7 +219,7 @@ class ScheduleForm extends Component {
   handleDelete = (jobName) => {
     this.cronServerRequest('delete', jobName);
     this.closeWithNoAction();
-  }
+  };
 
   closeOverlay = () => {
     if (this.state.editChannelName === ' - Select One - ') {
