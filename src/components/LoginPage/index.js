@@ -28,7 +28,6 @@ const link = `https://slack.com/oauth/authorize?scope=${scope}&client_id=${cli}&
 
 class LoginPage extends React.Component {
   componentDidMount() {
-    console.log(`LoginPage props: ${JSON.stringify(this.props)}`);
     try {
       const url = new URL(window.location);
       const params = new URLSearchParams(url.search);
@@ -40,7 +39,7 @@ class LoginPage extends React.Component {
       }
       return false;
     } catch (e) {
-      console.log("Login page didn't see token.", e);
+      console.log("Login page didn't see token.", e); // eslint-disable-line
     }
     return false;
   }

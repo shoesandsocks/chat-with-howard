@@ -145,7 +145,10 @@ class ScheduleForm extends Component {
   };
 
   componentDidMount() {
-    this.cronServerRequest(); // DEV
+    // this 'if' limits cDM to 'first run', hopefully
+    if (this.state.channels.length === 0) {
+      this.cronServerRequest(); // DEV
+    }
   }
 
   cronServerRequest = (action, jobOrName) => {
@@ -223,7 +226,7 @@ class ScheduleForm extends Component {
 
   closeOverlay = () => {
     if (this.state.editChannelName === ' - Select One - ') {
-      console.log('pick a real channel');
+      console.log('pick a real channel'); // eslint-disable-line
       return null;
     }
     const potentialJob = {
