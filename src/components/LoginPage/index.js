@@ -28,18 +28,21 @@ const link = `https://slack.com/oauth/authorize?scope=${scope}&client_id=${cli}&
 
 class LoginPage extends React.Component {
   componentDidMount() {
+    console.log(`LoginPage props: ${this.props}`);
     try {
       const url = new URL(window.location);
       const params = new URLSearchParams(url.search);
       const token = params.get('token');
-      if (token) {
+      if (token && token !== null) {
         this.props.setUser(jwtDecode(token));
         sessionStorage.setItem('token', token);
         window.location.replace(`${url.origin}/members`);
       }
+      return false;
     } catch (e) {
-      console.log(e);
+      console.log("Login page didn't see token.", e);
     }
+    return false;
   }
 
   render() {

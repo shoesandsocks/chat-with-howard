@@ -75,8 +75,11 @@ class App extends React.Component {
       user: null,
     };
   }
+
   componentDidMount() {
-    this.checkForUser(); // DEV
+    console.log(`main app props: ${this.props}`);
+    if (this.state.user !== null) return false; // to prevent rerender when Loginpage sets?
+    return this.checkForUser(); // DEV
   }
 
   setUser = user => this.setState({ user });

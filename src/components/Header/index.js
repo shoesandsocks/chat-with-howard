@@ -32,7 +32,6 @@ const Header = (props) => {
   let avi;
 
   if (!props.user) {
-    console.log('no user');
     name = '';
     avi = '';
   } else {
