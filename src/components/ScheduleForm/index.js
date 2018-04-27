@@ -187,7 +187,9 @@ class ScheduleForm extends Component {
     ));
 
   render() {
-    const { userCronJobs, isFormLoading, message } = this.props;
+    const {
+      userCronJobs, isFormLoading, message, channels,
+    } = this.props;
     if (isFormLoading) {
       return (
         <FormWrap>
@@ -198,7 +200,7 @@ class ScheduleForm extends Component {
     }
     if (this.state.overlayIsOpen) {
       const {
-        editCron, editJobName, editChannelName, adding, channels,
+        editCron, editJobName, editChannelName, adding, originalCron,
       } = this.state;
       return (
         <Overlay onClose={this.closeOverlay} buttonName="Save" buttonColor={orange}>
@@ -208,7 +210,7 @@ class ScheduleForm extends Component {
             editCron={editCron}
             editJobName={editJobName}
             editChannelName={editChannelName}
-            originalName={adding ? {} : this.state.originalCron.jobName}
+            originalName={adding ? {} : originalCron.jobName}
             handleDelete={this.handleDelete}
             handleEditChange={this.handleEditChange}
             closeWithNoAction={this.closeWithNoAction}
@@ -236,6 +238,7 @@ class ScheduleForm extends Component {
 }
 
 ScheduleForm.propTypes = {
+  channels: PropTypes.array.isRequired, // eslint-disable-line
   cronServerRequest: PropTypes.func.isRequired,
   userCronJobs: PropTypes.object.isRequired, // eslint-disable-line
   isFormLoading: PropTypes.bool.isRequired,
