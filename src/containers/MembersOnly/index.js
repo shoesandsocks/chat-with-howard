@@ -65,8 +65,15 @@ class MembersOnly extends React.Component {
   }
 
   componentDidMount() {
-    this.getHowardSettings(); // DEV
+    if (this.state.status === '') {
+      this.getHowardSettings(); // DEV
+    }
   }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('sCU in MembersOnly is running');
+  //   if (this.props === nextProps) return false;
+  //   return true;
+  // }
 
   getHowardSettings = () => {
     this.setState({ isLoading: true });

@@ -151,6 +151,12 @@ class ScheduleForm extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, nextState);
+    if (this.state === nextState) return false;
+    return true;
+  }
+  
   cronServerRequest = (action, jobOrName) => {
     const token = sessionStorage.getItem('token'); // eslint-disable-line
     const { tumblr_id } = jwtDecode(token);

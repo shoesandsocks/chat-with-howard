@@ -52,7 +52,9 @@ class ChatWithHoward extends Component {
   };
 
   componentDidMount() {
-    this.getVoices();
+    if (this.state.voices.length === 0) {
+      this.getVoices();
+    }
   }
 
   getVoices() {
