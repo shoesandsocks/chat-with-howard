@@ -53,7 +53,8 @@ const Break = styled.div`
   margin: ${props => (props.margin ? props.margin : '2em 0')};
 `;
 
-class MembersOnly extends React.Component {
+class MembersOnly extends React.PureComponent {
+  // TODO: testing here
   constructor(props) {
     super(props);
     this.state = {

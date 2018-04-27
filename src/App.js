@@ -68,17 +68,13 @@ const Logout = styled.button`
   cursor: pointer;
 `;
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      menuIsOpen: false,
-      user: null,
-    };
-  }
+  state = {
+    menuIsOpen: false,
+    user: null,
+  };
 
   componentDidMount() {
-    console.log(`main app props: ${JSON.stringify(this.props)}`);
-    if (this.state.user !== null) return false; // to prevent rerender when Loginpage sets?
+    if (this.state.user !== null) return false;
     return this.checkForUser(); // DEV
   }
 
@@ -106,6 +102,10 @@ class App extends React.Component {
     if (token && token !== null) {
       try {
         const user = jwtDecode(token);
+        // TODO: test whether this works -- expressly log out if user expired
+        if (user && user.exp < Math.floor(+new Date() / 1000)) {
+          this.handleLogout();
+        }
         if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
           return false;
         }
@@ -126,6 +126,7 @@ class App extends React.Component {
 
   render() {
     const { user, menuIsOpen } = this.state;
+    // const { user } = this.state;
     const PrivateRoute = ({ component: Component, authed, ...rest }) => (
       <Route
         {...rest}
@@ -136,7 +137,8 @@ class App extends React.Component {
       <Router>
         <div style={{ overflowX: 'hidden' }}>
           <MenuAndPage>
-            <Menu isOpen={menuIsOpen} toggle={this.toggleMenu}>
+            {/* <Menu> */}
+            <Menu isOpen={menuIsOpen}>
               <LinksUL>
                 <LinksLI>
                   <Link exact activeStyle={{ color: orange }} to="/">
@@ -182,7 +184,9 @@ class App extends React.Component {
               </LinksUL>
             </Menu>
             <Page isOpen={menuIsOpen}>
+              {/* <Page> */}
               <Header user={user} active={menuIsOpen} action={this.toggleMenu} />
+              {/* <Header user={user} /> */}
               <Switch>
                 <Route exact path="/" render={() => <ChatWithHoward />} />
                 <Route path="/about" render={() => <About />} />
