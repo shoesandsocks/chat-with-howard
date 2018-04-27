@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import Overlay from '../Overlay';
 import EditorOverlay from '../EditorOverlay';
 
@@ -110,32 +108,6 @@ const AddBtn = styled.button`
 
 class ScheduleForm extends Component {
   state = {
-    userCronJobs: [],
-    channels: [],
-    // DEV
-    // userCronJobs: [
-    //   {
-    //     jobName: 'x',
-    //     channelName: 'y',
-    //     cronSked: '*/4 * * * *',
-    //   },
-    // ],
-    // channels: [
-    //   {
-    //     name: 'y',
-    //     id: '123',
-    //   },
-    //   {
-    //     name: 'x',
-    //     id: '1323',
-    //   },
-    //   {
-    //     name: 'z',
-    //     id: '123r3',
-    //   },
-    // ],
-    isLoading: false,
-    message: null,
     overlayIsOpen: false,
     originalCron: {},
     editCron: '',
@@ -143,54 +115,6 @@ class ScheduleForm extends Component {
     editJobName: '',
     adding: false,
   };
-
-  componentDidMount() {
-    // this 'if' limits cDM to 'first run', hopefully
-    if (this.state.channels.length === 0) {
-      this.cronServerRequest(); // DEV
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps, nextState);
-    if (this.state === nextState) return false;
-    return true;
-  }
-  
-  cronServerRequest = (action, jobOrName) => {
-    const token = sessionStorage.getItem('token'); // eslint-disable-line
-    const { tumblr_id } = jwtDecode(token);
-    let uri;
-    let payload;
-    if (action === 'delete') {
-      uri = '/howardcron/kill';
-      payload = { tumblr_id, jobName: jobOrName };
-    } else if (action === 'add') {
-      uri = '/howardcron/add';
-      payload = { tumblr_id, newJob: jobOrName };
-    } else {
-      uri = '/howardcron';
-      payload = { tumblr_id };
-    }
-    this.setState({ isLoading: true, message: null });
-    return axios
-      .post(uri, payload, { headers: { token } })
-      .then((response) => {
-        const { usersJobs, channels } = response.data.jobsAndChannels;
-        const { message } = response.data;
-        console.log('Server response message: ', message); // eslint-disable-line
-        this.setState({
-          userCronJobs: usersJobs[0].activeCronJobs,
-          channels,
-          isLoading: false,
-        });
-      })
-      .catch((e) => {
-        console.log('something went wrong interacting w server: ', e); // eslint-disable-line
-        this.setState({ message: e });
-      });
-  };
-
   handleOpenEditor = (job) => {
     this.setState({
       overlayIsOpen: true,
@@ -226,7 +150,7 @@ class ScheduleForm extends Component {
   };
 
   handleDelete = (jobName) => {
-    this.cronServerRequest('delete', jobName);
+    this.props.cronServerRequest('delete', jobName);
     this.closeWithNoAction();
   };
 
@@ -241,13 +165,13 @@ class ScheduleForm extends Component {
       cronSked: this.state.editCron,
     };
     if (this.state.adding) {
-      this.cronServerRequest('add', potentialJob);
+      this.props.cronServerRequest('add', potentialJob);
     } else if (
       Object.values(potentialJob).sort() !== Object.values(this.state.originalCron).sort()
     ) {
-      this.cronServerRequest('delete', this.state.originalCron.jobName);
+      this.props.cronServerRequest('delete', this.state.originalCron.jobName);
       setTimeout(() => {
-        this.cronServerRequest('add', potentialJob);
+        this.props.cronServerRequest('add', potentialJob);
       }, 500);
     }
     return this.closeWithNoAction();
@@ -263,8 +187,8 @@ class ScheduleForm extends Component {
     ));
 
   render() {
-    const { userCronJobs, isLoading, message } = this.state;
-    if (isLoading) {
+    const { userCronJobs, isFormLoading, message } = this.props;
+    if (isFormLoading) {
       return (
         <FormWrap>
           loading...
@@ -311,6 +235,11 @@ class ScheduleForm extends Component {
   }
 }
 
-ScheduleForm.propTypes = {};
+ScheduleForm.propTypes = {
+  cronServerRequest: PropTypes.func.isRequired,
+  userCronJobs: PropTypes.object.isRequired, // eslint-disable-line
+  isFormLoading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+};
 
 export default ScheduleForm;

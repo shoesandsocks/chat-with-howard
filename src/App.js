@@ -77,7 +77,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(`main app props: ${this.props}`);
+    console.log(`main app props: ${JSON.stringify(this.props)}`);
     if (this.state.user !== null) return false; // to prevent rerender when Loginpage sets?
     return this.checkForUser(); // DEV
   }

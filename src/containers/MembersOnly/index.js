@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 import ScheduleForm from '../../components/ScheduleForm';
 
@@ -61,12 +62,39 @@ class MembersOnly extends React.Component {
       hushed: '',
       isLoading: false,
       error: '',
+      userCronJobs: [],
+      channels: [],
+      // DEV
+      // userCronJobs: [
+      //   {
+      //     jobName: 'x',
+      //     channelName: 'y',
+      //     cronSked: '*/4 * * * *',
+      //   },
+      // ],
+      // channels: [
+      //   {
+      //     name: 'y',
+      //     id: '123',
+      //   },
+      //   {
+      //     name: 'x',
+      //     id: '1323',
+      //   },
+      //   {
+      //     name: 'z',
+      //     id: '123r3',
+      //   },
+      // ],
+      isFormLoading: false,
+      message: null,
     };
   }
 
   componentDidMount() {
     if (this.state.status === '') {
       this.getHowardSettings(); // DEV
+      this.cronServerRequest();
     }
   }
   // shouldComponentUpdate(nextProps, nextState) {
@@ -96,6 +124,39 @@ class MembersOnly extends React.Component {
       });
   };
 
+  cronServerRequest = (action, jobOrName) => {
+    const token = sessionStorage.getItem('token'); // eslint-disable-line
+    const { tumblr_id } = jwtDecode(token);
+    let uri;
+    let payload;
+    if (action === 'delete') {
+      uri = '/howardcron/kill';
+      payload = { tumblr_id, jobName: jobOrName };
+    } else if (action === 'add') {
+      uri = '/howardcron/add';
+      payload = { tumblr_id, newJob: jobOrName };
+    } else {
+      uri = '/howardcron';
+      payload = { tumblr_id };
+    }
+    this.setState({ isFormLoading: true, message: null });
+    return axios
+      .post(uri, payload, { headers: { token } })
+      .then((response) => {
+        const { usersJobs, channels } = response.data.jobsAndChannels;
+        const { message } = response.data;
+        console.log('Server response message: ', message); // eslint-disable-line
+        this.setState({
+          userCronJobs: usersJobs[0].activeCronJobs,
+          channels,
+          isFormLoading: false,
+        });
+      })
+      .catch((e) => {
+        console.log('something went wrong interacting w server: ', e); // eslint-disable-line
+        this.setState({ message: e });
+      });
+  };
   render() {
     if (this.state.isLoading) {
       return (
@@ -105,7 +166,15 @@ class MembersOnly extends React.Component {
         </MembersOnlyWrap>
       );
     }
-    const { status, mouthiness, hushed } = this.state;
+    const {
+      status,
+      mouthiness,
+      hushed,
+      userCronJobs,
+      channels,
+      isFormLoading,
+      message,
+    } = this.state;
     return (
       <MembersOnlyWrap>
         <Break margin=".25em 0" />
@@ -116,7 +185,13 @@ class MembersOnly extends React.Component {
         </StatusBar>
         <Break margin=".25em 0" />
         <Break />
-        <ScheduleForm />
+        <ScheduleForm
+          cronServerRequest={this.cronServerRequest}
+          channels={channels}
+          userCronJobs={userCronJobs}
+          isFormLoading={isFormLoading}
+          message={message}
+        />
         <Break />
       </MembersOnlyWrap>
     );
