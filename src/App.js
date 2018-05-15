@@ -19,25 +19,11 @@ import Header from './components/Header';
 
 import { darkBlue, orange } from './utils/palette';
 
+import './App.css';
+
 const MenuAndPage = styled.div`
   display: flex;
   min-height: 100%;
-`;
-
-const Menu = styled.div`
-  opacity: ${props => (props.isOpen ? '1' : '0')};
-  padding-top: 1em;
-  transition: all 0.4s;
-  background: white;
-  position: absolute;
-  /* width: 80px; N.B.: width controlled in Page element by translate3d */
-`;
-
-const Page = styled.div`
-  height: 100%;
-  flex: 2;
-  transform: ${props => (props.isOpen ? 'translate3d(80px,0,0)' : 'translate3d(0, 0, 0)')};
-  transition: transform 0.3s;
 `;
 
 const LinksUL = styled.ul`
@@ -62,20 +48,18 @@ const LinksLI = styled.li`
     }
   }
 `;
+
 const Logout = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
 `;
 class App extends React.Component {
-  state = {
-    menuIsOpen: false,
-    user: null,
-  };
+  state = { user: null };
 
   componentDidMount() {
-    if (this.state.user !== null) return false;
-    return this.checkForUser(); // DEV
+    // if (this.state.user !== null) return false;
+    // return this.checkForUser(); // DEV
   }
 
   setUser = user => this.setState({ user });
@@ -96,37 +80,32 @@ class App extends React.Component {
     return false;
   };
 
-  isAuthed = () => {
-    // return true; // DEV
-    const token = sessionStorage.getItem('token');
-    if (token && token !== null) {
-      try {
-        const user = jwtDecode(token);
-        // TODO: test whether this works -- expressly log out if user expired
-        if (user && user.exp < Math.floor(+new Date() / 1000)) {
-          this.handleLogout();
-        }
-        if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
-          return false;
-        }
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    return false;
-  };
+  isAuthed = () => true; // DEV
+  // const token = sessionStorage.getItem('token');
+  // if (token && token !== null) {
+  //   try {
+  //     const user = jwtDecode(token);
+  //     // TODO: test whether this works -- expressly log out if user expired
+  //     if (user && user.exp < Math.floor(+new Date() / 1000)) {
+  //       this.handleLogout();
+  //     }
+  //     if (!user || !user.exp || user.exp < Math.floor(+new Date() / 1000)) {
+  //       return false;
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+  // return false;
 
   handleLogout = () => {
     sessionStorage.setItem('token', null);
     this.setState({ user: null });
   };
 
-  toggleMenu = () => this.setState({ menuIsOpen: !this.state.menuIsOpen });
-
   render() {
-    const { user, menuIsOpen } = this.state;
-    // const { user } = this.state;
+    const { user } = this.state;
     const PrivateRoute = ({ component: Component, authed, ...rest }) => (
       <Route
         {...rest}
@@ -137,8 +116,7 @@ class App extends React.Component {
       <Router>
         <div style={{ overflowX: 'hidden' }}>
           <MenuAndPage>
-            {/* <Menu> */}
-            <Menu isOpen={menuIsOpen}>
+            <div id="menu">
               <LinksUL>
                 <LinksLI>
                   <Link exact activeStyle={{ color: orange }} to="/">
@@ -182,11 +160,9 @@ class App extends React.Component {
                   </LinksLI>
                 )}
               </LinksUL>
-            </Menu>
-            <Page isOpen={menuIsOpen}>
-              {/* <Page> */}
-              <Header user={user} active={menuIsOpen} action={this.toggleMenu} />
-              {/* <Header user={user} /> */}
+            </div>
+            <div id="page">
+              <Header user={user} />
               <Switch>
                 <Route exact path="/" render={() => <ChatWithHoward />} />
                 <Route path="/about" render={() => <About />} />
@@ -199,7 +175,7 @@ class App extends React.Component {
                 />
                 <Route component={Nope} />
               </Switch>
-            </Page>
+            </div>
           </MenuAndPage>
         </div>
       </Router>

@@ -133,6 +133,7 @@ class ChatWithHoward extends Component {
       ]),
     });
   };
+
   approve = () => {
     if (this.state.approvedToSpeak) return this.setState({ approvedToSpeak: false, skipit: false });
     this.speak('oh kay');

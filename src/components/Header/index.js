@@ -27,7 +27,6 @@ const HeaderWrap = styled.div`
 `;
 
 const Header = (props) => {
-  const { action, active } = props;
   let name;
   let avi;
 
@@ -41,7 +40,7 @@ const Header = (props) => {
 
   return (
     <HeaderWrap>
-      <Navicon action={action} active={active} />
+      <Navicon />
       {name && <span>{name}</span>}
       {name && <img src={avi} alt="avatar" />}
     </HeaderWrap>
@@ -49,8 +48,6 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  action: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     avi: PropTypes.string,

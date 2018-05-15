@@ -53,6 +53,24 @@ const Break = styled.div`
   margin: ${props => (props.margin ? props.margin : '2em 0')};
 `;
 
+const UpdateBtn = styled.button`
+  border: none;
+  background: orange;
+  padding: 0.25em 0.75em;
+  border-radius: 6px;
+  color: white;
+  margin: 1em 0em 1em 0em;
+  cursor: pointer;
+`;
+
+const Ul = styled.ul`
+  list-style-type: none;
+  padding-left: 0px;
+  text-align: left;
+  font-size: 0.75em;
+  margin: 1em 0em 1em 0em;
+`;
+
 class MembersOnly extends React.PureComponent {
   // TODO: testing here
   constructor(props) {
@@ -65,6 +83,8 @@ class MembersOnly extends React.PureComponent {
       error: '',
       userCronJobs: [],
       channels: [],
+      coreupdate: {},
+      dirty: false,
       // DEV
       // userCronJobs: [
       //   {
@@ -125,6 +145,16 @@ class MembersOnly extends React.PureComponent {
       });
   };
 
+  getCoreUpdate() {
+    const token = sessionStorage.getItem('token'); // eslint-disable-line
+    axios.get('/howardupdate', { headers: { token } }).then((response) => {
+      this.setState({ coreupdate: response.data, dirty: true });
+    });
+  }
+  clearDirty() {
+    return this.setState({ coreupdate: {}, dirty: false });
+  }
+
   cronServerRequest = (action, jobOrName) => {
     const token = sessionStorage.getItem('token'); // eslint-disable-line
     const { tumblr_id } = jwtDecode(token);
@@ -158,6 +188,7 @@ class MembersOnly extends React.PureComponent {
         this.setState({ message: e });
       });
   };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -175,7 +206,16 @@ class MembersOnly extends React.PureComponent {
       channels,
       isFormLoading,
       message,
+      coreupdate,
+      dirty,
     } = this.state;
+    const { depQuotes, newQuotes } = coreupdate;
+    const layout = array =>
+      array.map((a, i) => (
+        <li key={i}>
+          <code>{JSON.stringify(a)}</code>
+        </li>
+      ));
     return (
       <MembersOnlyWrap>
         <Break margin=".25em 0" />
@@ -194,6 +234,28 @@ class MembersOnly extends React.PureComponent {
           message={message}
         />
         <Break />
+        {!dirty && <UpdateBtn onClick={this.getCoreUpdate}>Check for Updates</UpdateBtn>}
+        {dirty && newQuotes.length > 0 ? (
+          <div>
+            <h3>new quotes</h3>
+            <Ul>{layout(newQuotes)}</Ul>
+          </div>
+        ) : (
+          <h3>No new quotes found</h3>
+        )}
+        <br />
+        {dirty && depQuotes.length > 0 ? (
+          <div>
+            <h3>deprecated quotes</h3>
+            <Ul>{layout(depQuotes)}</Ul>
+          </div>
+        ) : (
+          <h3>Nothing deprecated</h3>
+        )}
+        <br />
+        {dirty &&
+          <UpdateBtn onClick={this.clearDirty}>Okay...</UpdateBtn>
+        }
       </MembersOnlyWrap>
     );
   }
