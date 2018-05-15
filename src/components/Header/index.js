@@ -40,7 +40,7 @@ const Header = (props) => {
 
   return (
     <HeaderWrap>
-      <Navicon />
+      <Navicon toggleMenu={props.toggleMenu} />
       {name && <span>{name}</span>}
       {name && <img src={avi} alt="avatar" />}
     </HeaderWrap>
@@ -48,6 +48,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
+  toggleMenu: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     avi: PropTypes.string,

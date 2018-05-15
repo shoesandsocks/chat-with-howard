@@ -8,15 +8,17 @@
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.4"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "idb-keyval": "github:shoesandsocks/idb-keyval",
     "jwt-decode": "^2.2.0",
+    "popmotion-pose": "^1.4.4",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-pose": "^1.6.4",
     "react-router-dom": "^4.2.2",
     "source-map-explorer": "^1.5.0",
     "styled-components": "^3.2.1"
