@@ -83,7 +83,10 @@ class MembersOnly extends React.PureComponent {
       error: '',
       userCronJobs: [],
       channels: [],
-      coreupdate: {},
+      coreupdate: {
+        depQuotes: [],
+        newQuotes: [],
+      },
       dirty: false,
       // DEV
       // userCronJobs: [
@@ -210,6 +213,7 @@ class MembersOnly extends React.PureComponent {
     const { depQuotes, newQuotes } = coreupdate;
     const layout = array =>
       array.map((a, i) => (
+        // eslint-disable-next-line
         <li key={i}>
           <code>{JSON.stringify(a)}</code>
         </li>
