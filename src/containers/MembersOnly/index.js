@@ -56,11 +56,8 @@ const Break = styled.div`
 const UpdateBtn = styled.button`
   border: none;
   background: orange;
-  height: 1em;
-  padding: 0.25em 0.75em;
-  border-radius: 6px;
+  padding: 1em 0.75em;
   color: white;
-  margin: 1em 0em 1em 0em;
   cursor: pointer;
 `;
 
