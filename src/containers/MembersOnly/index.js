@@ -61,6 +61,10 @@ const UpdateBtn = styled.button`
   cursor: pointer;
 `;
 
+const UpdateText = styled.h3`
+  color: white;
+`;
+
 const Ul = styled.ul`
   list-style-type: none;
   padding-left: 0px;
@@ -237,22 +241,22 @@ class MembersOnly extends React.PureComponent {
         {!dirty && <UpdateBtn onClick={this.getCoreUpdate}>Check for Updates</UpdateBtn>}
         {dirty && newQuotes.length > 0 && (
           <div>
-            <h3>new quotes</h3>
+            <UpdateText>new quotes</UpdateText>
             <Ul>{layout(newQuotes)}</Ul>
           </div>
         )}
         {dirty && newQuotes.length === 0 && (
-          <h3>No new quotes found</h3>
+          <UpdateText>No new quotes found</UpdateText>
         )}
         <br />
         {dirty && depQuotes.length > 0 && (
           <div>
-            <h3>deprecated quotes</h3>
+            <UpdateText>deprecated quotes</UpdateText>
             <Ul>{layout(depQuotes)}</Ul>
           </div>
         )}
         {dirty && depQuotes.length === 0 && (
-          <h3>Nothing deprecated</h3>
+          <UpdateText>Nothing deprecated</UpdateText>
         )}
         <br />
         {dirty &&
