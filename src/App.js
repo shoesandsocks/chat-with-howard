@@ -81,7 +81,7 @@ class App extends React.Component {
     } catch (e) {
       console.log("Didn't see token.", e); // eslint-disable-line
     }
-    return false;
+    return window.history.replaceState(null, null, window.location.pathname);
     // return this.checkForUser(); // DEV
   }
 
@@ -130,7 +130,7 @@ class App extends React.Component {
 
   handleLogout = () => {
     sessionStorage.setItem('token', null);
-    this.setState({ user: null });
+    this.setState({ user: null, CurrentComponent: ChatWithHoward });
   };
 
   toggleMenu = () => this.setState({ menuIsOpen: !this.state.menuIsOpen });
