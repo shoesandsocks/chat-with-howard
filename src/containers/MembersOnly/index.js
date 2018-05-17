@@ -56,6 +56,7 @@ const Break = styled.div`
 const UpdateBtn = styled.button`
   border: none;
   background: orange;
+  height: 1em;
   padding: 0.25em 0.75em;
   border-radius: 6px;
   color: white;
@@ -177,7 +178,7 @@ class MembersOnly extends React.PureComponent {
       .then((response) => {
         const { usersJobs, channels } = response.data.jobsAndChannels;
         const { message } = response.data;
-        console.log('Server response message: ', message); // eslint-disable-line
+        console.log('Server response message (okay if undef): ', message); // eslint-disable-line
         this.setState({
           userCronJobs: usersJobs[0].activeCronJobs,
           channels,
@@ -237,21 +238,23 @@ class MembersOnly extends React.PureComponent {
         />
         <Break />
         {!dirty && <UpdateBtn onClick={this.getCoreUpdate}>Check for Updates</UpdateBtn>}
-        {dirty && newQuotes.length > 0 ? (
+        {dirty && newQuotes.length > 0 && (
           <div>
             <h3>new quotes</h3>
             <Ul>{layout(newQuotes)}</Ul>
           </div>
-        ) : (
+        )}
+        {dirty && newQuotes.length === 0 && (
           <h3>No new quotes found</h3>
         )}
         <br />
-        {dirty && depQuotes.length > 0 ? (
+        {dirty && depQuotes.length > 0 && (
           <div>
             <h3>deprecated quotes</h3>
             <Ul>{layout(depQuotes)}</Ul>
           </div>
-        ) : (
+        )}
+        {dirty && depQuotes.length === 0 && (
           <h3>Nothing deprecated</h3>
         )}
         <br />
