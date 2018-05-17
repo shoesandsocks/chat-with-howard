@@ -65,14 +65,32 @@ const Logout = styled.button`
 `;
 
 class App extends React.Component {
-  state = { user: null, menuIsOpen: false, CurrentComponent: About };
+  state = { user: null, menuIsOpen: false, CurrentComponent: ChatWithHoward };
 
   componentDidMount() {
+    this.checkForUser();
     if (this.state.user !== null) return false;
-    return this.checkForUser(); // DEV
+    try {
+      const url = new URL(window.location);
+      const params = new URLSearchParams(url.search);
+      const token = params.get('token');
+      if (token && token !== null) {
+        this.setUser(jwtDecode(token), 'cdm');
+        sessionStorage.setItem('token', token);
+      }
+    } catch (e) {
+      console.log("Didn't see token.", e); // eslint-disable-line
+    }
+    return false;
+    // return this.checkForUser(); // DEV
   }
 
-  setUser = user => this.setState({ user });
+  setUser = (user, option) => {
+    if (option === 'cdm') {
+      return this.setState({ user, CurrentComponent: MembersOnly });
+    }
+    return this.setState({ user });
+  }
 
   checkForUser = () => {
     const token = sessionStorage.getItem('token');
@@ -87,7 +105,7 @@ class App extends React.Component {
         return console.log('catch in App cFU: ', e); // eslint-disable-line
       }
     }
-    return false;
+    return null;
   };
 
   isAuthed = () => { // DEV
