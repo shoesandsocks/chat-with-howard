@@ -145,15 +145,13 @@ class MembersOnly extends React.PureComponent {
       });
   };
 
-  getCoreUpdate() {
+  getCoreUpdate = () => {
     const token = sessionStorage.getItem('token'); // eslint-disable-line
     axios.get('/howardupdate', { headers: { token } }).then((response) => {
       this.setState({ coreupdate: response.data, dirty: true });
     });
   }
-  clearDirty() {
-    return this.setState({ coreupdate: {}, dirty: false });
-  }
+  clearDirty = () => this.setState({ coreupdate: {}, dirty: false })
 
   cronServerRequest = (action, jobOrName) => {
     const token = sessionStorage.getItem('token'); // eslint-disable-line
