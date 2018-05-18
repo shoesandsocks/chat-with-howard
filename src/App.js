@@ -30,7 +30,7 @@ const StyledSlider = styled(Slider)`
 `;
 
 const Page = styled.div`
-  width: 100vw;
+  width: 98vw;
   position: relative;
 `;
 

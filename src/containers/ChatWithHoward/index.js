@@ -21,8 +21,7 @@ const url =
 
 const AppWrap = styled.div`
   margin: 0;
-  padding: 3em 3em 0 3em;
-  height: 96vh;
+  padding: 3em 3em 3em;
   background: ${darkBlue};
   display: flex;
   flex-flow: column nowrap;
