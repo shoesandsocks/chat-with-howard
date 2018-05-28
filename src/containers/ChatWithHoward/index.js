@@ -20,8 +20,8 @@ const url =
 // currently failing experiment @ 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
 
 const AppWrap = styled.div`
-  margin: 0;
-  padding: 3em 3em 3em;
+  height: 92vh;
+  padding-top: 4em;
   background: ${darkBlue};
   display: flex;
   flex-flow: column nowrap;
