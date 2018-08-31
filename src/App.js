@@ -6,6 +6,7 @@ import posed from 'react-pose';
 
 import ChatWithHoward from './containers/ChatWithHoward';
 import About from './containers/About';
+import Plugin from './containers/Plugin';
 import MembersOnly from './containers/MembersOnly';
 import LoginPage from './components/LoginPage';
 import Header from './components/Header';
@@ -138,6 +139,7 @@ class App extends React.Component {
   changeComponent = (string) => {
     if (string === 'Home') return this.setState({ CurrentComponent: ChatWithHoward });
     if (string === 'About') return this.setState({ CurrentComponent: About });
+    if (string === 'Plugin') return this.setState({ CurrentComponent: Plugin });
     if (string === 'Login') return this.setState({ CurrentComponent: LoginPage });
     if (string === 'Members') return this.setState({ CurrentComponent: MembersOnly });
     return false;
@@ -150,6 +152,7 @@ class App extends React.Component {
         <Menu>
           <MenuBtn active={this.state.CurrentComponent === ChatWithHoward} onClick={() => this.changeComponent('Home')}>Home</MenuBtn>
           <MenuBtn active={this.state.CurrentComponent === About} onClick={() => this.changeComponent('About')}>About</MenuBtn>
+          <MenuBtn active={this.state.CurrentComponent === Plugin} onClick={() => this.changeComponent('Plugin')}>Plugin</MenuBtn>
           {!user && (
           <MenuBtn active={this.state.CurrentComponent === LoginPage} onClick={() => this.changeComponent('Login')}>Login</MenuBtn>
             )}
