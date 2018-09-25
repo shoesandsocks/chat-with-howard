@@ -19,7 +19,9 @@ const Text = styled.p`
   color: white;
 `;
 
-const uri = 'https%3A%2F%2Fhowardchicken.herokuapp.com%2Foauth';
+let uri = `${window.location.protocol}%2F%2F${window.location.host}%2Foauth`;
+uri = uri.replace(/:/g, '%3A');
+// const uri = 'https%3A%2F%2Fhowardchicken.herokuapp.com%2Foauth';
 const cli = '11083475395.188120798310';
 const scope = 'identity.basic,identity.avatar';
 const link = `https://slack.com/oauth/authorize?scope=${scope}&client_id=${cli}&redirect_uri=${uri}`;
