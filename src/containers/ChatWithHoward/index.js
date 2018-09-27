@@ -12,7 +12,7 @@ import Overlay from '../../components/Overlay';
 import { darkBlue } from '../../utils/palette';
 import getQ from '../../utils/localsearch';
 
-const url = '/https://localhost:3001/howard';
+const url = 'localhost:3001/howard';
 // const url =
 //   process.env.NODE_ENV === 'production'
 //     ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
