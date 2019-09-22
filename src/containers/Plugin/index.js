@@ -22,7 +22,7 @@ Author URI: https://www.pineandvine.com
 */
 
 function howard_chicken_get_quote() {
-  $url = 'https://hc-api.online/howard';
+  $url = 'https://howardchicken.online/howard';
   $response = wp_safe_remote_post(  $url, $args = array(
     'method'      => 'POST',
     'timeout'     => 45,
