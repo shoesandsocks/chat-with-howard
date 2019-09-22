@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import jwtDecode from 'jwt-decode';
-import posed from 'react-pose';
+import { motion } from "framer-motion"
 
 import ChatWithHoward from './containers/ChatWithHoward';
 import About from './containers/About';
@@ -13,22 +13,14 @@ import Header from './components/Header';
 
 import { darkBlue, orange } from './utils/palette';
 
-const config = {
-  closed: {
-    left: '-100px',
+const variants = {
+  hidden: {
+    x: -100,
   },
-  open: {
-    left: 0,
-    delay: 300,
-  },
+  visible: {
+    x: 0,
+  }
 };
-
-const Slider = posed.div(config);
-const StyledSlider = styled(Slider)`
-  position: absolute;
-  overflow-x: hidden;
-  display: flex;
-`;
 
 const Page = styled.div`
   width: 98vw;
@@ -146,9 +138,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, CurrentComponent } = this.state;
+    const { user, CurrentComponent, menuIsOpen } = this.state;
+    console.log(menuIsOpen)
     return (
-      <StyledSlider pose={this.state.menuIsOpen ? 'open' : 'closed'}>
+      <motion.div 
+        style={{ position: "absolute", display: "flex"}}
+        initial="hidden"
+        animate={menuIsOpen ? "visible" : "hidden"}
+        variants={variants}
+      >
         <Menu>
           <MenuBtn active={this.state.CurrentComponent === ChatWithHoward} onClick={() => this.changeComponent('Home')}>Home</MenuBtn>
           <MenuBtn active={this.state.CurrentComponent === About} onClick={() => this.changeComponent('About')}>About</MenuBtn>
@@ -179,7 +177,7 @@ class App extends React.Component {
           <Header user={user} toggleMenu={this.toggleMenu} />
           <CurrentComponent />
         </Page>
-      </StyledSlider>
+      </motion.div>
     );
   }
 }

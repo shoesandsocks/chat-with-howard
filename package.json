@@ -3,23 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "^3.1.2"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "idb-keyval": "github:shoesandsocks/idb-keyval",
+    "axios": "^0.18.1",
+    "framer-motion": "^1.6.7",
+    "idb-keyval": "^3.2.0",
     "jwt-decode": "^2.2.0",
-    "popmotion-pose": "^1.4.4",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-pose": "^1.6.4",
-    "source-map-explorer": "^1.5.0",
+    "source-map-explorer": "^2.0.1",
     "styled-components": "^3.2.1"
   },
   "scripts": {
@@ -28,5 +22,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
