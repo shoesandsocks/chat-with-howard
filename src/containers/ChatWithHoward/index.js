@@ -12,11 +12,11 @@ import Overlay from '../../components/Overlay';
 import { darkBlue } from '../../utils/palette';
 import getQ from '../../utils/localsearch';
 
-// const url = '/howard';
-const url =
-  process.env.NODE_ENV === 'production'
-    ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
-    : 'http://localhost:3001/howard';
+const url = 'https://hc-api.online/howard';
+// const url =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://howardchicken.herokuapp.com/howard' // N.B. not original, with hyphen
+//     : 'http://localhost:3001/howard';
 // currently failing experiment @ 'https://www.pineandvine.com/rich-text/.netlify/functions/howard'
 
 const AppWrap = styled.div`
