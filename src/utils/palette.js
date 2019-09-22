@@ -1,2 +1,2 @@
-export const darkBlue = '#434d5a';
+export const darkBlue = '#434d9a';
 export const orange = '#FFB300';
